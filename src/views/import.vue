@@ -2,7 +2,7 @@
   <div class="spot-container">
     <div class="spot" @click="selectSpot(1)">Castle Ruins</div>
     <div class="spot" @click="selectSpot(2)">Orc Camp</div>
-    <div class="spot" @click="selectSpot(3)">Choose Spot 3</div>
+    <div class="spot" @click="selectSpot(3)">Bloody Monastery</div>
   </div>
   <div v-if="selectedSpot === 1" class="datas">
     <!-- Castle Ruins spot -->
@@ -16,7 +16,7 @@
           placeholder="0"
           type="number"
           min="0"
-          v-model="item1"
+          v-model="items[1].item1"
         /><br />
       </div>
       <div class="box">
@@ -27,7 +27,7 @@
           placeholder="0"
           type="number"
           min="0"
-          v-model="item2"
+          v-model="items[1].item2"
         /><br />
       </div>
       <div class="box">
@@ -38,7 +38,7 @@
           placeholder="0"
           type="number"
           min="0"
-          v-model="item3"
+          v-model="items[1].item3"
         /><br />
       </div>
       <div class="box">
@@ -49,7 +49,7 @@
           placeholder="0"
           type="number"
           min="0"
-          v-model="item4"
+          v-model="items[1].item4"
         /><br />
       </div>
       <div class="box">
@@ -60,7 +60,7 @@
           placeholder="0"
           type="number"
           min="0"
-          v-model="item5"
+          v-model="items[1].item5"
         /><br />
       </div>
       <div class="box">
@@ -71,7 +71,7 @@
           placeholder="0"
           type="number"
           min="0"
-          v-model="item6"
+          v-model="items[1].item6"
         /><br />
       </div>
       <div class="box">
@@ -82,7 +82,7 @@
           placeholder="0"
           type="number"
           min="0"
-          v-model="item7"
+          v-model="items[1].item7"
         /><br />
       </div>
       <div class="box">
@@ -93,7 +93,7 @@
           placeholder="0"
           type="number"
           min="0"
-          v-model="item8"
+          v-model="items[1].item8"
         /><br />
       </div>
       <div class="box">
@@ -104,7 +104,7 @@
           placeholder="0"
           type="number"
           min="0"
-          v-model="item9"
+          v-model="items[1].item9"
         /><br />
       </div>
       <div class="box">
@@ -115,7 +115,7 @@
           placeholder="0"
           type="number"
           min="0"
-          v-model="item10"
+          v-model="items[1].item10"
         /><br />
       </div>
     </div>
@@ -127,7 +127,7 @@
           placeholder="0"
           type="number"
           min="0"
-          v-model="hours"
+          v-model="hoursSpent[selectedSpot]"
         /><br />
       </div>
     </div>
@@ -148,7 +148,7 @@
           placeholder="0"
           type="number"
           min="0"
-          v-model="item1_spot2"
+          v-model="items[2].item1_spot2"
         /><br />
       </div>
       <div class="box">
@@ -159,7 +159,7 @@
           placeholder="0"
           type="number"
           min="0"
-          v-model="item2"
+          v-model="items[2].item2"
         /><br />
       </div>
       <div class="box">
@@ -170,7 +170,7 @@
           placeholder="0"
           type="number"
           min="0"
-          v-model="item3"
+          v-model="items[2].item3"
         /><br />
       </div>
       <div class="box">
@@ -181,7 +181,7 @@
           placeholder="0"
           type="number"
           min="0"
-          v-model="item4"
+          v-model="items[2].item4"
         /><br />
       </div>
       <div class="box">
@@ -192,7 +192,7 @@
           placeholder="0"
           type="number"
           min="0"
-          v-model="item5"
+          v-model="items[2].item5"
         /><br />
       </div>
       <div class="box">
@@ -203,7 +203,7 @@
           placeholder="0"
           type="number"
           min="0"
-          v-model="item6"
+          v-model="items[2].item6"
         /><br />
       </div>
       <div class="box">
@@ -214,7 +214,7 @@
           placeholder="0"
           type="number"
           min="0"
-          v-model="item7"
+          v-model="items[2].item7"
         /><br />
       </div>
       <div class="box">
@@ -225,7 +225,7 @@
           placeholder="0"
           type="number"
           min="0"
-          v-model="item8"
+          v-model="items[2].item8"
         /><br />
       </div>
       <div class="box">
@@ -236,7 +236,7 @@
           placeholder="0"
           type="number"
           min="0"
-          v-model="item9"
+          v-model="items[2].item9"
         /><br />
       </div>
       <div class="box">
@@ -247,7 +247,7 @@
           placeholder="0"
           type="number"
           min="0"
-          v-model="item10"
+          v-model="items[2].item10"
         /><br />
       </div>
     </div>
@@ -259,7 +259,7 @@
           placeholder="0"
           type="number"
           min="0"
-          v-model="hours"
+          v-model="hoursSpent[selectedSpot]"
         /><br />
       </div>
     </div>
@@ -269,18 +269,18 @@
   </div>
 
   <div v-if="selectedSpot === 3" class="datas">
-    <!-- Content for Spot 3 -->
-    <h1>Import Loot for Spot 3</h1>
+    <!-- Bloody Monastery-->
+    <h1>Import Loot for Bloody Monastery</h1>
     <div class="bbox">
       <div class="box">
-        <img class="loot1" src="@/assets/loot1.png" />
-        <p class="text">Mark of Desperate Rebels</p>
+        <img class="loot1" src="@/assets/pobf.png" />
+        <p class="text">Proof of Blind Faith</p>
         <input
-          name="item1"
+          name="item1_spot3"
           placeholder="0"
           type="number"
           min="0"
-          v-model="item1"
+          v-model="items[3].item1_spot3"
         /><br />
       </div>
       <div class="box">
@@ -291,7 +291,7 @@
           placeholder="0"
           type="number"
           min="0"
-          v-model="item2"
+          v-model="items[3].item2"
         /><br />
       </div>
       <div class="box">
@@ -302,7 +302,7 @@
           placeholder="0"
           type="number"
           min="0"
-          v-model="item3"
+          v-model="items[3].item3"
         /><br />
       </div>
       <div class="box">
@@ -313,40 +313,40 @@
           placeholder="0"
           type="number"
           min="0"
-          v-model="item4"
+          v-model="items[3].item4"
         /><br />
       </div>
       <div class="box">
-        <img class="loot1" src="@/assets/hoaf.png" />
-        <p class="text">Heart of the Arid Forest</p>
+        <img class="loot1" src="@/assets/narcl.png" />
+        <p class="text">Narc's Lightning</p>
         <input
-          name="item5"
+          name="item5_spot3"
           placeholder="0"
           type="number"
           min="0"
-          v-model="item5"
+          v-model="items[3].item5_spot3"
         /><br />
       </div>
       <div class="box">
-        <img class="loot1" src="@/assets/vflame.png" />
-        <p class="text">Valtarra's Flame</p>
+        <img class="loot1" src="@/assets/mnail.png" />
+        <p class="text">Moon's Split Nail</p>
         <input
-          name="item6"
+          name="item6_spot3"
           placeholder="0"
           type="number"
           min="0"
-          v-model="item6"
+          v-model="items[3].item6_spot3"
         /><br />
       </div>
       <div class="box">
-        <img class="loot1" src="@/assets/Sotfn.png" />
-        <p class="text">Shard of the Furious Night</p>
+        <img class="loot1" src="@/assets/sdn.png" />
+        <p class="text">Shard of the Drained Night</p>
         <input
-          name="item7"
+          name="item7_spot3"
           placeholder="0"
           type="number"
           min="0"
-          v-model="item7"
+          v-model="items[3].item7_spot3"
         /><br />
       </div>
       <div class="box">
@@ -357,18 +357,18 @@
           placeholder="0"
           type="number"
           min="0"
-          v-model="item8"
+          v-model="items[3].item8"
         /><br />
       </div>
       <div class="box">
-        <img class="loot1" src="@/assets/tos.png" />
-        <p class="text">Trace of Savagery</p>
+        <img class="loot1" src="@/assets/tob.png" />
+        <p class="text">Trace of Battle</p>
         <input
-          name="item9"
+          name="item9_spot3"
           placeholder="0"
           type="number"
           min="0"
-          v-model="item9"
+          v-model="items[3].item9_spot3"
         /><br />
       </div>
       <div class="box">
@@ -379,7 +379,18 @@
           placeholder="0"
           type="number"
           min="0"
-          v-model="item10"
+          v-model="items[3].item10"
+        /><br />
+      </div>
+      <div class="box">
+        <img class="loot1" src="@/assets/ctobs.png" />
+        <p class="text">Cold Tears of the Black Sun</p>
+        <input
+          name="item11_spot3"
+          placeholder="0"
+          type="number"
+          min="0"
+          v-model="items[3].item11_spot3"
         /><br />
       </div>
     </div>
@@ -391,7 +402,7 @@
           placeholder="0"
           type="number"
           min="0"
-          v-model="hours"
+          v-model="hoursSpent[selectedSpot]"
         /><br />
       </div>
     </div>
@@ -407,43 +418,103 @@
 
   <div class="result-container">
     <div class="total-silver-text">Total Silver Earned</div>
-    <p v-if="total > 0" class="resultm">
-      Total {{ total.toLocaleString() }} Silver
+    <p class="resultm">
+      Total
+      {{ total > 0 ? total.toLocaleString() : "-" }} Silver
     </p>
+
     <div class="average-silver-text">Average Silver per Hour</div>
-    <p v-if="averageSilverPerHour > 0" class="average-silver">
-      Average {{ averageSilverPerHour.toLocaleString() }} Silver per Hour
+    <p class="average-silver">
+      Average
+      {{
+        averageSilverPerHour > 0 ? averageSilverPerHour.toLocaleString() : "-"
+      }}
+      Silver per Hour
     </p>
     <div class="total-hours-text">Total Hours</div>
-    <p v-if="hours > 0" class="total-hours">{{ hours }} Hours</p>
+    <p class="total-hours">
+      {{ accumulatedHours > 0 ? accumulatedHours : "-" }}
+      Hours
+    </p>
   </div>
 </template>
 <script>
 export default {
   data() {
     return {
-      item1: null,
-      item2: null,
-      item3: null,
-      item4: null,
-      item5: null,
-      item6: null,
-      item7: null,
-      item8: null,
-      item9: null,
-      item10: null,
-      total: null,
-      hours: null,
-      averageSilverPerHour: null,
+      items: {
+        1: {
+          item1: null,
+          item2: null,
+          item3: null,
+          item4: null,
+          item5: null,
+          item6: null,
+          item7: null,
+          item8: null,
+          item9: null,
+          item10: null,
+        },
+        2: {
+          item1_spot2: null,
+          item2: null,
+          item3: null,
+          item4: null,
+          item5: null,
+          item6: null,
+          item7: null,
+          item8: null,
+          item9: null,
+          item10: null,
+        },
+        3: {
+          item1_spot3: null,
+          item2: null,
+          item3: null,
+          item4: null,
+          item5_spot3: null,
+          item6_spot3: null,
+          item7_spot3: null,
+          item8: null,
+          item9_spot3: null,
+          item10: null,
+          item11_spot3: null,
+        },
+      },
+      hoursSpent: {
+        1: null,
+        2: null,
+        3: null,
+      },
       selectedSpot: null,
-      item1_spot2: null,
+      sessionTotal: 0,
+      accumulatedTotal: 0,
+      accumulatedHours: 0,
     };
+  },
+  computed: {
+    total() {
+      return this.accumulatedTotal;
+    },
+    averageSilverPerHour() {
+      return this.accumulatedHours > 0
+        ? this.accumulatedTotal / this.accumulatedHours
+        : 0;
+    },
   },
   methods: {
     selectSpot(spotNumber) {
       this.selectedSpot = spotNumber;
     },
+
+    resetFields() {
+      for (let item in this.items[this.selectedSpot]) {
+        this.items[this.selectedSpot][item] = null;
+      }
+      this.hoursSpent[this.selectedSpot] = null;
+    },
     calculateAndSave() {
+      let currentTotal = 0;
       const prices = {
         item1: 17500,
         item2: 151000,
@@ -455,39 +526,30 @@ export default {
         item8: 10000000,
         item9: 19400,
         item10: 50000,
+        item1_spot2: 18500,
+        item1_spot3: 19000,
+        item5_spot3: 3000000,
+        item6_spot3: 183000000,
+        item7_spot3: 14649855,
+        item9_spot3: 135000,
+        item11_spot3: 30000,
       };
-      const prices_spot2 = {
-        item1_spot2: 185000,
-        item2_spot2: 160000,
-        // ... add more prices for Spot 2 items
-      };
-      if (this.selectedSpot === 1) {
-        this.total =
-          this.item1 * prices.item1 +
-          this.item2 * prices.item2 +
-          this.item3 * prices.item3 +
-          this.item4 * prices.item4 +
-          this.item5 * prices.item5 +
-          this.item6 * prices.item6 +
-          this.item7 * prices.item7 +
-          this.item8 * prices.item8 +
-          this.item9 * prices.item9 +
-          this.item10 * prices.item10;
-      } else if (this.selectedSpot === 2) {
-        this.total =
-          this.item1_spot2 * prices_spot2.item1_spot2 +
-          this.item2 * prices.item2 +
-          this.item3 * prices.item3 +
-          this.item4 * prices.item4 +
-          this.item5 * prices.item5 +
-          this.item6 * prices.item6 +
-          this.item7 * prices.item7 +
-          this.item8 * prices.item8 +
-          this.item9 * prices.item9 +
-          this.item10 * prices.item10;
+
+      const currentItems = this.items[this.selectedSpot];
+      for (let item in currentItems) {
+        if (prices[item]) {
+          currentTotal += (currentItems[item] || 0) * prices[item];
+        }
       }
-      const hoursBase = this.hours || 1;
-      this.averageSilverPerHour = this.total / hoursBase;
+
+      // total h
+      this.accumulatedTotal += currentTotal;
+      this.accumulatedHours += parseFloat(
+        this.hoursSpent[this.selectedSpot] || 0
+      );
+
+      // reset after save and calc
+      this.resetFields();
     },
   },
 };
@@ -555,8 +617,8 @@ export default {
 }
 .result-container {
   position: absolute;
-  top: 15%;
-  right: 20%;
+  top: 25%;
+  right: 5%;
   text-align: right;
 }
 
