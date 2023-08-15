@@ -525,6 +525,7 @@
   </div>
 </template>
 <script>
+import axios from "axios";
 export default {
   data() {
     return {
@@ -589,6 +590,7 @@ export default {
       lastSessionTotal: 0,
       lastSessionHours: 0,
       accumulatedMinutes: 0,
+      lastSessionMinutes: 0,
     };
   },
   computed: {
@@ -615,7 +617,7 @@ export default {
       this.hoursSpent[this.selectedSpot] = null;
       this.minutesSpent[this.selectedSpot] = null;
     },
-    calculateAndSave() {
+    async calculateAndSave() {
       let currentTotal = 0;
       const prices = {
         item1: 17500,
@@ -669,10 +671,41 @@ export default {
       this.accumulatedTotal += currentTotal;
       this.accumulatedHours += totalHoursForSession;
 
+      const spotNames = {
+        1: "Castle Ruins",
+        2: "Orc Camp",
+        3: "Bloody Monastery",
+      };
+
+      const currentSpotName = spotNames[this.selectedSpot];
+
       // reset after save and calc
+      const dataToSave = {
+        userId: "someUserId",
+        spotId: this.selectedSpot,
+        grindingSpotName: currentSpotName,
+        items: this.items[this.selectedSpot],
+        total: this.lastSessionTotal,
+        average: Math.round(
+          this.lastSessionTotal /
+            (this.lastSessionHours + this.lastSessionMinutes / 60)
+        ),
+        hours: this.lastSessionHours,
+        minutes: this.lastSessionMinutes,
+      };
+
+      // Send the data to backend
+      try {
+        await axios.post("http://localhost:5000/saveStats", dataToSave);
+        console.log("Data saved successfully");
+      } catch (error) {
+        console.error("Error saving data:", error);
+      }
+
+      // Reset fields
       this.resetFields();
-      this.hoursSpent[this.selectedSpot] = totalHoursForSession;
-      this.minutesSpent[this.selectedSpot] = remainingMinutes;
+      this.hoursSpent[this.selectedSpot] = this.lastSessionHours;
+      this.minutesSpent[this.selectedSpot] = this.lastSessionMinutes;
     },
   },
   watch: {
