@@ -119,18 +119,33 @@
         /><br />
       </div>
     </div>
-    <div class="hours-box">
-      <p class="hours-text">Hours Spent Grinding</p>
+    <div class="time-input-container">
       <div class="hours-box">
+        <p class="hours-text">Hours</p>
         <input
           name="hours"
           placeholder="0"
           type="number"
           min="0"
           v-model="hoursSpent[selectedSpot]"
-        /><br />
+        />
+      </div>
+      <div class="minutes-box">
+        <p class="minutes-text">Minutes</p>
+        <input
+          name="minutes"
+          placeholder="0"
+          type="number"
+          min="0"
+          max="59"
+          v-model="minutesSpent[selectedSpot]"
+        />
+        <div v-if="minuteError[selectedSpot]" class="error">
+          {{ minuteError[selectedSpot] }}
+        </div>
       </div>
     </div>
+
     <button @click="calculateAndSave" type="submit" class="buttonsave">
       Calculate & Save
     </button>
@@ -251,16 +266,30 @@
         /><br />
       </div>
     </div>
-    <div class="hours-box">
-      <p class="hours-text">Hours Spent Grinding</p>
+    <div class="time-input-container">
       <div class="hours-box">
+        <p class="hours-text">Hours</p>
         <input
           name="hours"
           placeholder="0"
           type="number"
           min="0"
           v-model="hoursSpent[selectedSpot]"
-        /><br />
+        />
+      </div>
+      <div class="minutes-box">
+        <p class="minutes-text">Minutes</p>
+        <input
+          name="minutes"
+          placeholder="0"
+          type="number"
+          min="0"
+          max="59"
+          v-model="minutesSpent[selectedSpot]"
+        />
+        <div v-if="minuteError[selectedSpot]" class="error">
+          {{ minuteError[selectedSpot] }}
+        </div>
       </div>
     </div>
     <button @click="calculateAndSave" type="submit" class="buttonsave">
@@ -394,16 +423,30 @@
         /><br />
       </div>
     </div>
-    <div class="hours-box">
-      <p class="hours-text">Hours Spent Grinding</p>
+    <div class="time-input-container">
       <div class="hours-box">
+        <p class="hours-text">Hours</p>
         <input
           name="hours"
           placeholder="0"
           type="number"
           min="0"
           v-model="hoursSpent[selectedSpot]"
-        /><br />
+        />
+      </div>
+      <div class="minutes-box">
+        <p class="minutes-text">Minutes</p>
+        <input
+          name="minutes"
+          placeholder="0"
+          type="number"
+          min="0"
+          max="59"
+          v-model="minutesSpent[selectedSpot]"
+        />
+        <div v-if="minuteError[selectedSpot]" class="error">
+          {{ minuteError[selectedSpot] }}
+        </div>
       </div>
     </div>
     <button @click="calculateAndSave" type="submit" class="buttonsave">
@@ -419,22 +462,32 @@
   <div class="result-container">
     <div class="total-silver-text">Total Silver Earned</div>
     <p class="resultm">
-      Total
-      {{ total > 0 ? total.toLocaleString() : "-" }} Silver
+      {{ total > 0 ? total.toLocaleString() : "-" }}
     </p>
 
     <div class="average-silver-text">Average Silver per Hour</div>
     <p class="average-silver">
-      Average
       {{
-        averageSilverPerHour > 0 ? averageSilverPerHour.toLocaleString() : "-"
+        accumulatedTotal > 0 && (accumulatedHours > 0 || accumulatedMinutes > 0)
+          ? Math.round(
+              accumulatedTotal / (accumulatedHours + accumulatedMinutes / 60)
+            ).toLocaleString()
+          : "-"
       }}
-      Silver per Hour
     </p>
+
     <div class="total-hours-text">Total Hours</div>
     <p class="total-hours">
-      {{ accumulatedHours > 0 ? accumulatedHours : "-" }}
-      Hours
+      {{
+        accumulatedHours > 0
+          ? accumulatedHours + " Hour" + (accumulatedHours > 1 ? "s" : "")
+          : ""
+      }}
+      {{
+        accumulatedMinutes > 0
+          ? accumulatedMinutes + " Minute" + (accumulatedMinutes > 1 ? "s" : "")
+          : "-"
+      }}
     </p>
   </div>
   <!--lijeva strana last session-->
@@ -442,22 +495,32 @@
     <div class="session-total-silver-text">Last Session Silver Earned</div>
     <p class="session-resultm">
       {{ lastSessionTotal > 0 ? lastSessionTotal.toLocaleString() : "-" }}
-      Silver
     </p>
     <div class="session-average-silver-text">
       Last Session Average Silver per Hour
     </div>
     <p class="session-average-silver">
       {{
-        lastSessionTotal > 0 && lastSessionHours > 0
-          ? (lastSessionTotal / lastSessionHours).toLocaleString()
+        lastSessionTotal > 0 && (lastSessionHours > 0 || lastSessionMinutes > 0)
+          ? Math.round(
+              lastSessionTotal / (lastSessionHours + lastSessionMinutes / 60)
+            ).toLocaleString()
           : "-"
       }}
-      Silver per Hour
     </p>
-    <div class="session-total-hours-text">Last Session Hours</div>
+
+    <div class="session-total-hours-text">Last Session Time Spent</div>
     <p class="session-total-hours">
-      {{ lastSessionHours > 0 ? lastSessionHours : "-" }} Hours
+      {{
+        lastSessionHours > 0
+          ? lastSessionHours + " Hour" + (lastSessionHours > 1 ? "s" : "")
+          : ""
+      }}
+      {{
+        lastSessionMinutes > 0
+          ? lastSessionMinutes + " Minute" + (lastSessionMinutes > 1 ? "s" : "")
+          : "-"
+      }}
     </p>
   </div>
 </template>
@@ -509,12 +572,23 @@ export default {
         2: null,
         3: null,
       },
+      minutesSpent: {
+        1: null,
+        2: null,
+        3: null,
+      },
+      minuteError: {
+        1: null,
+        2: null,
+        3: null,
+      },
       selectedSpot: null,
       sessionTotal: 0,
       accumulatedTotal: 0,
       accumulatedHours: 0,
       lastSessionTotal: 0,
       lastSessionHours: 0,
+      accumulatedMinutes: 0,
     };
   },
   computed: {
@@ -522,10 +596,10 @@ export default {
       return this.accumulatedTotal;
     },
     averageSilverPerHour() {
+      let totalHoursDecimal =
+        this.accumulatedHours + this.accumulatedMinutes / 60;
       let average =
-        this.accumulatedHours > 0
-          ? this.accumulatedTotal / this.accumulatedHours
-          : 0;
+        totalHoursDecimal > 0 ? this.accumulatedTotal / totalHoursDecimal : 0;
       return Math.round(average);
     },
   },
@@ -539,6 +613,7 @@ export default {
         this.items[this.selectedSpot][item] = null;
       }
       this.hoursSpent[this.selectedSpot] = null;
+      this.minutesSpent[this.selectedSpot] = null;
     },
     calculateAndSave() {
       let currentTotal = 0;
@@ -561,10 +636,17 @@ export default {
         item9_spot3: 135000,
         item11_spot3: 30000,
       };
-      this.lastSessionTotal = currentTotal;
-      this.lastSessionHours = parseFloat(
-        this.hoursSpent[this.selectedSpot] || 0
+
+      let currentHours = parseFloat(this.hoursSpent[this.selectedSpot] || 0);
+      let currentMinutes = parseFloat(
+        this.minutesSpent[this.selectedSpot] || 0
       );
+
+      // Calculate overflow hours and remaining minutes
+      let overflowHours = Math.floor(currentMinutes / 60);
+      let remainingMinutes = currentMinutes % 60;
+
+      let totalHoursForSession = overflowHours + currentHours;
 
       const currentItems = this.items[this.selectedSpot];
       for (let item in currentItems) {
@@ -572,19 +654,40 @@ export default {
           currentTotal += (currentItems[item] || 0) * prices[item];
         }
       }
+      this.accumulatedMinutes += remainingMinutes;
+      if (this.accumulatedMinutes >= 60) {
+        this.accumulatedHours += Math.floor(this.accumulatedMinutes / 60);
+        this.accumulatedMinutes = this.accumulatedMinutes % 60;
+      }
 
       // last session
       this.lastSessionTotal = currentTotal;
-      this.lastSessionHours = parseFloat(
-        this.hoursSpent[this.selectedSpot] || 0
-      );
+      this.lastSessionHours = totalHoursForSession;
+      this.lastSessionMinutes = remainingMinutes;
 
       // total
       this.accumulatedTotal += currentTotal;
-      this.accumulatedHours += this.lastSessionHours;
+      this.accumulatedHours += totalHoursForSession;
 
       // reset after save and calc
       this.resetFields();
+      this.hoursSpent[this.selectedSpot] = totalHoursForSession;
+      this.minutesSpent[this.selectedSpot] = remainingMinutes;
+    },
+  },
+  watch: {
+    minutesSpent: {
+      deep: true,
+      handler(newVal) {
+        for (const spot in newVal) {
+          if (newVal[spot] > 59) {
+            this.minuteError[spot] = "You can't type more than 59 minutes";
+            this.minutesSpent[spot] = 59; // stavi na 59 max ako prekoraci
+          } else {
+            this.minuteError[spot] = null;
+          }
+        }
+      },
     },
   },
 };
@@ -613,18 +716,38 @@ export default {
   position: relative;
 }
 
-.hours-box {
-  margin-top: 1px;
-  text-align: center;
+.time-input-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 15px;
+  gap: 20px;
 }
 
-.hours-text {
-  display: inline-block;
+.hours-box,
+.minutes-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.hours-box input {
+  width: 110px;
+  text-align: center;
+  text-align: left;
+}
+.minutes-box input {
+  width: 80px;
+  text-align: center;
+  text-align: left;
+}
+.hours-text,
+.minutes-text {
   background: rgba(83, 83, 73, 0.744);
   color: #fff;
   padding: 5px;
-  position: relative;
-  top: 7px;
+  margin-bottom: 10px;
+  width: 100%;
+  text-align: center;
 }
 
 .text {
@@ -730,5 +853,10 @@ export default {
     background: rgba(83, 83, 73, 0.744);
     padding: 5px;
   }
+}
+.error {
+  color: red;
+  font-size: 12px;
+  margin-top: 5px;
 }
 </style>
