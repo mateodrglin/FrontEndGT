@@ -411,7 +411,7 @@
     </button>
   </div>
 
-  <!-- ako nema odabranog spota -->
+  <!-- desna strana total -->
   <div v-if="!selectedSpot" class="datas">
     <h1>Please Choose a spot</h1>
   </div>
@@ -435,6 +435,29 @@
     <p class="total-hours">
       {{ accumulatedHours > 0 ? accumulatedHours : "-" }}
       Hours
+    </p>
+  </div>
+  <!--lijeva strana last session-->
+  <div class="session-result-container">
+    <div class="session-total-silver-text">Last Session Silver Earned</div>
+    <p class="session-resultm">
+      {{ lastSessionTotal > 0 ? lastSessionTotal.toLocaleString() : "-" }}
+      Silver
+    </p>
+    <div class="session-average-silver-text">
+      Last Session Average Silver per Hour
+    </div>
+    <p class="session-average-silver">
+      {{
+        lastSessionTotal > 0 && lastSessionHours > 0
+          ? (lastSessionTotal / lastSessionHours).toLocaleString()
+          : "-"
+      }}
+      Silver per Hour
+    </p>
+    <div class="session-total-hours-text">Last Session Hours</div>
+    <p class="session-total-hours">
+      {{ lastSessionHours > 0 ? lastSessionHours : "-" }} Hours
     </p>
   </div>
 </template>
@@ -490,6 +513,8 @@ export default {
       sessionTotal: 0,
       accumulatedTotal: 0,
       accumulatedHours: 0,
+      lastSessionTotal: 0,
+      lastSessionHours: 0,
     };
   },
   computed: {
@@ -497,9 +522,11 @@ export default {
       return this.accumulatedTotal;
     },
     averageSilverPerHour() {
-      return this.accumulatedHours > 0
-        ? this.accumulatedTotal / this.accumulatedHours
-        : 0;
+      let average =
+        this.accumulatedHours > 0
+          ? this.accumulatedTotal / this.accumulatedHours
+          : 0;
+      return Math.round(average);
     },
   },
   methods: {
@@ -534,6 +561,10 @@ export default {
         item9_spot3: 135000,
         item11_spot3: 30000,
       };
+      this.lastSessionTotal = currentTotal;
+      this.lastSessionHours = parseFloat(
+        this.hoursSpent[this.selectedSpot] || 0
+      );
 
       const currentItems = this.items[this.selectedSpot];
       for (let item in currentItems) {
@@ -542,11 +573,15 @@ export default {
         }
       }
 
-      // total h
-      this.accumulatedTotal += currentTotal;
-      this.accumulatedHours += parseFloat(
+      // last session
+      this.lastSessionTotal = currentTotal;
+      this.lastSessionHours = parseFloat(
         this.hoursSpent[this.selectedSpot] || 0
       );
+
+      // total
+      this.accumulatedTotal += currentTotal;
+      this.accumulatedHours += this.lastSessionHours;
 
       // reset after save and calc
       this.resetFields();
@@ -662,6 +697,38 @@ export default {
     &:hover {
       background-color: rgba(234, 234, 86, 0.752);
     }
+  }
+}
+.session-result-container {
+  position: absolute;
+  top: 25%;
+  left: 5%;
+  text-align: left;
+
+  .session-total-silver-text,
+  .session-average-silver-text,
+  .session-total-hours-text {
+    font-size: 20px;
+    color: black;
+    background-color: yellow;
+    display: block;
+    margin-bottom: 5px;
+    padding: 2px;
+  }
+
+  .session-resultm,
+  .session-average-silver {
+    color: white;
+    background: rgba(83, 83, 73, 0.744);
+    font-size: 20px;
+    padding: 5px;
+  }
+
+  .session-total-hours {
+    font-size: 20px;
+    color: white;
+    background: rgba(83, 83, 73, 0.744);
+    padding: 5px;
   }
 }
 </style>
