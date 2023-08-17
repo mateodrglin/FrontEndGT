@@ -59,6 +59,7 @@ export default {
       email: "",
       password: "",
       errorMessage: null,
+      isLoggedIn: false,
     };
   },
   methods: {
@@ -68,23 +69,29 @@ export default {
           email: this.email,
           password: this.password,
         });
-        console.log("API response received:", response);
-        if (response.status === 200) {
+
+        if (
+          response.status === 200 &&
+          response.data.message === "Login successful"
+        ) {
           // Login successful
           localStorage.setItem("userId", response.data.userId);
-
+          this.isLoggedIn = true; // Update the state
           this.$router.push("/import");
         } else {
-          // Handle other status codes if necessary
-          this.errorMessage =
-            error.response.data.message || "Failed to login. Please try again.";
+          this.handleError(response);
         }
       } catch (error) {
-        console.log("Error caught:", error);
-        this.errorMessage =
-          error.response.data.message || "Failed to login. Please try again.";
+        this.handleError(error.response);
       }
     },
+
+    handleError(response) {
+      console.error("Error:", response);
+      this.errorMessage =
+        response.data.message || "Failed to login. Please try again.";
+    },
+
     moveToRegister() {
       this.$router.push("/register");
     },

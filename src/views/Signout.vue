@@ -9,20 +9,35 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   data() {
     return {
-      email: localStorage.getItem("userEmail") || "Unknown User", // Assuming you've stored the email in local storage on login
+      email: localStorage.getItem("userEmail") || "Unknown User",
     };
   },
   methods: {
-    signOut() {
-      // Clear local storage (or session storage or cookies depending on where you store the data)
-      localStorage.removeItem("userEmail");
-      localStorage.removeItem("authToken"); // If you've stored an authentication token
+    async signOut() {
+      try {
+        // Call the logout endpoint to end the session on the server
+        const response = await axios.delete("http://localhost:5000/logout", {
+          withCredentials: true,
+        });
 
-      // Redirect to login page or home page
-      this.$router.push("/login");
+        if (response.status === 200) {
+          // Clear local storage (or session storage or cookies depending on where you store the data)
+          localStorage.removeItem("userEmail");
+          localStorage.removeItem("userId"); // Assuming you stored user ID on login
+
+          // Redirect to login page or home page
+          this.$router.push("/login");
+        } else {
+          console.error("Error during logout:", response.data.message);
+        }
+      } catch (error) {
+        console.error("Error during logout:", error);
+      }
     },
   },
 };

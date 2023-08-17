@@ -23,13 +23,13 @@
             <router-link to="/import">Import</router-link>
           </li>
 
-          <li class="nav-item">
+          <li class="nav-item" v-if="!isLoggedIn">
             <router-link to="/Login">Login</router-link>
           </li>
-          <li class="nav-item">
+          <li class="nav-item" v-if="!isLoggedIn">
             <router-link to="/Register">Register</router-link>
           </li>
-          <li class="nav-item">
+          <li class="nav-item" v-if="isLoggedIn">
             <router-link to="/Signout">Logout</router-link>
           </li>
         </ul>
@@ -40,6 +40,24 @@
   <router-view />
   <img class="background" />
 </template>
+<script>
+import axios from "axios";
+
+export default {
+  data() {
+    return {
+      isLoggedIn: false,
+    };
+  },
+  mounted() {
+    axios
+      .get("http://localhost:5000/isAuthenticated", { withCredentials: true })
+      .then((response) => {
+        this.isLoggedIn = response.data.isAuthenticated;
+      });
+  },
+};
+</script>
 
 <style lang="scss">
 body {
