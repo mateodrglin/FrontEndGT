@@ -50,6 +50,9 @@
 <script>
 import axios from "axios";
 
+// Set Axios configuration globally
+axios.defaults.withCredentials = true;
+
 export default {
   data() {
     return {
@@ -68,12 +71,13 @@ export default {
         console.log("API response received:", response);
         if (response.status === 200) {
           // Login successful
-          localStorage.setItem("userId", response.data?.user?.id);
+          localStorage.setItem("userId", response.data.userId);
 
           this.$router.push("/import");
         } else {
           // Handle other status codes if necessary
-          this.errorMessage = "Failed to login. Please try again.";
+          this.errorMessage =
+            error.response.data.message || "Failed to login. Please try again.";
         }
       } catch (error) {
         console.log("Error caught:", error);
