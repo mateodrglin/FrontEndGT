@@ -31,10 +31,11 @@
         Login
       </button>
       <div
-        class="alert alert-warning alert-dismissible fade show mt-5 d-none"
+        v-if="errorMessage"
+        class="alert alert-warning alert-dismissible fade show mt-5"
         role="alert"
-        id="alert_1"
       >
+        {{ errorMessage }}
         <button
           type="button"
           class="btn-close"
@@ -47,27 +48,48 @@
 </template>
 
 <script>
-  export default {
-    data() {
-      return {
-        email: "",
-        password: "",
-      };
+import axios from "axios";
+
+export default {
+  data() {
+    return {
+      email: "",
+      password: "",
+      errorMessage: null,
+    };
+  },
+  methods: {
+    async Login() {
+      try {
+        const response = await axios.post("http://localhost:5000/login", {
+          email: this.email,
+          password: this.password,
+        });
+        console.log("API response received:", response);
+        if (response.status === 200) {
+          // Login successful
+          localStorage.setItem("userId", response.data?.user?.id);
+
+          this.$router.push("/import");
+        } else {
+          // Handle other status codes if necessary
+          this.errorMessage = "Failed to login. Please try again.";
+        }
+      } catch (error) {
+        console.log("Error caught:", error);
+        this.errorMessage =
+          error.response.data.message || "Failed to login. Please try again.";
+      }
     },
-    methods: {
-      login(submitEvent) {
-        this.email = submitEvent.target.elements.email.value;
-        this.password = submitEvent.target.elements.password.value;
-      },
-      moveToRegister() {
-        this.$router.push("/register");
-      },
+    moveToRegister() {
+      this.$router.push("/register");
     },
-  };
+  },
+};
 </script>
 
 <style lang="scss">
-  .container {
-    padding-top: 50px;
-  }
+.container {
+  padding-top: 50px;
+}
 </style>

@@ -3,6 +3,17 @@
     <form @submit.prevent="Register">
       <h2 class="mb-3">Register</h2>
       <div class="input">
+        <label for="name">Name</label>
+        <input
+          class="form-control"
+          type="text"
+          required
+          v-model="name"
+          name="name"
+          placeholder="Your name"
+        />
+      </div>
+      <div class="input">
         <label for="email">Email address</label>
         <input
           class="form-control"
@@ -37,6 +48,7 @@
         role="alert"
         id="alert_2"
       >
+        {{ errorMessage }}
         <button
           type="button"
           class="btn-close"
@@ -49,28 +61,48 @@
 </template>
 
 <script>
-  export default {
-    data() {
-      return {
-        email: "",
-        password: "",
-      };
-    },
-    methods: {
-      register(submitEvent) {
-        // data update
-        this.email = submitEvent.target.elements.email.value;
-        this.password = submitEvent.target.elements.password.value;
-      },
-      moveToLogin() {
-        this.$router.push("/login");
-      },
-    },
-  };
-</script>
+import axios from "axios";
 
-<style lang="scss">
-  .container {
-    padding-top: 50px;
-  }
-</style>
+export default {
+  data() {
+    return {
+      name: "",
+      email: "",
+      password: "",
+      errorMessage: null,
+    };
+  },
+  methods: {
+    async Register() {
+      this.errorMessage = null; // Reset the error message
+
+      // Check password length
+      if (this.password.length < 6) {
+        this.errorMessage = "Password must be at least 6 characters long.";
+        return;
+      }
+
+      try {
+        const response = await axios.post("http://localhost:5000/register", {
+          name: this.name,
+          email: this.email,
+          password: this.password,
+        });
+
+        if (response.status === 201) {
+          this.$router.push("/login");
+        } else {
+          this.errorMessage = "Failed to register. Please try again.";
+        }
+      } catch (error) {
+        this.errorMessage =
+          error.response.data.message ||
+          "Failed to register. Please try again.";
+      }
+    },
+    moveToLogin() {
+      this.$router.push("/login");
+    },
+  },
+};
+</script>
