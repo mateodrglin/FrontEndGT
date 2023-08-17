@@ -70,14 +70,11 @@ export default {
           password: this.password,
         });
 
-        if (
-          response.status === 200 &&
-          response.data.message === "Login successful"
-        ) {
+        if (response.status === 200) {
           // Login successful
           localStorage.setItem("userId", response.data.userId);
-          this.isLoggedIn = true; // Update the state
           this.$router.push("/import");
+          window.location.reload();
         } else {
           this.handleError(response);
         }
@@ -99,6 +96,11 @@ export default {
 };
 </script>
 
+<style lang="scss">
+.container {
+  padding-top: 50px;
+}
+</style>
 <style lang="scss">
 .container {
   padding-top: 50px;

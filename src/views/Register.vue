@@ -90,7 +90,9 @@ export default {
         });
 
         if (response.status === 201) {
+          // Registration successful
           this.$router.push("/login");
+          window.location.reload();
         } else {
           this.errorMessage = "Failed to register. Please try again.";
         }

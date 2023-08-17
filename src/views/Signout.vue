@@ -5,6 +5,9 @@
     <button id="sign_out" class="mt-4 btn btn-danger" @click="signOut">
       Logout
     </button>
+    <div v-if="logoutSuccess" class="alert alert-success mt-4">
+      Successfully logged out!
+    </div>
   </div>
 </template>
 
@@ -15,23 +18,28 @@ export default {
   data() {
     return {
       email: localStorage.getItem("userEmail") || "Unknown User",
+      logoutSuccess: false,
     };
   },
   methods: {
     async signOut() {
       try {
-        // Call the logout endpoint to end the session on the server
         const response = await axios.delete("http://localhost:5000/logout", {
           withCredentials: true,
         });
 
         if (response.status === 200) {
-          // Clear local storage (or session storage or cookies depending on where you store the data)
           localStorage.removeItem("userEmail");
-          localStorage.removeItem("userId"); // Assuming you stored user ID on login
+          localStorage.removeItem("userId");
 
-          // Redirect to login page or home page
-          this.$router.push("/login");
+          // Update logoutSuccess to display the message
+          this.logoutSuccess = true;
+
+          // Navigate to home after a short delay and then refresh
+          setTimeout(() => {
+            window.location.href = "/";
+            window.location.reload();
+          }, 2000); // 2 seconds delay to let the user see the message
         } else {
           console.error("Error during logout:", response.data.message);
         }
