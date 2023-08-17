@@ -3,14 +3,14 @@
     <form @submit.prevent="Register">
       <h2 class="mb-3">Register</h2>
       <div class="input">
-        <label for="name">Name</label>
+        <label for="username">Username</label>
         <input
           class="form-control"
           type="text"
           required
-          v-model="name"
-          name="name"
-          placeholder="Your name"
+          v-model="username"
+          name="username"
+          placeholder="Your username"
         />
       </div>
       <div class="input">
@@ -66,7 +66,7 @@ import axios from "axios";
 export default {
   data() {
     return {
-      name: "",
+      username: "",
       email: "",
       password: "",
       errorMessage: null,
@@ -84,7 +84,7 @@ export default {
 
       try {
         const response = await axios.post("http://localhost:5000/register", {
-          name: this.name,
+          username: this.username,
           email: this.email,
           password: this.password,
         });
