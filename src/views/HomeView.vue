@@ -1,39 +1,45 @@
 <template>
-  <div class="data-container">
-    <h1>Saved Data</h1>
-    <div v-for="record in records" :key="record.date">
-      <p>Date: {{ record.date }}</p>
-      <p>Time: {{ record.time }}</p>
-      <!-- Display other data here -->
-      <p>Total: {{ record.total.toLocaleString() }} Silver</p>
-    </div>
+  <div>
+    <p>This is the HomeView component</p>
+    <ApexPieChart v-if="dataCollection" :chart-data="dataCollection" />
   </div>
 </template>
 
 <script>
-// You can import data from 'import.vue' or handle it differently based on your application structure
+import ApexPieChart from "./ApexPieChart.vue"; // Make sure the path is correct
+import axios from "axios";
+
 export default {
+  components: {
+    ApexPieChart,
+  },
   data() {
     return {
-      // An array to store the records
-      records: [],
+      dataCollection: null,
     };
   },
-  methods: {
-    // Method to load the saved data
-    loadSavedData() {
-      // Logic to load data, possibly from a Vuex store, local storage, or an API
-    },
-  },
-  mounted() {
-    // Load saved data when the component is mounted
-    this.loadSavedData();
+  async mounted() {
+    try {
+      const response = await axios.get("http://localhost:5000/totalsilver", {
+        withCredentials: true,
+      });
+      const spotsData = response.data;
+
+      const labels = spotsData.map((spot) => spot._id);
+      const data = spotsData.map((spot) => spot.totalSilver);
+
+      this.dataCollection = {
+        labels: labels,
+        datasets: [
+          {
+            data: data,
+            backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"],
+          },
+        ],
+      };
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
   },
 };
 </script>
-
-<style>
-.data-container {
-  /* Add styling for your container here */
-}
-</style>

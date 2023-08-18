@@ -1,7 +1,8 @@
 <template>
   <nav>
     <nav class="navbar navbar-expand-lg">
-      <a class="navbar-brand" href="HomeView.vue">BDOTracker</a>
+      <router-link class="navbar-brand" to="/">BDOTracker</router-link>
+
       <button
         class="navbar-toggler"
         type="button"
@@ -36,10 +37,10 @@
       </div>
     </nav>
   </nav>
-  <!-- v-if="!store.currentUser" -->
   <router-view />
   <img class="background" />
 </template>
+
 <script>
 import axios from "axios";
 
