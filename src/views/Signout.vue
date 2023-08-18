@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="text-center">You're now logged as</div>
+    <div class="text-center">You're now logged in as</div>
     <div id="username_display" class="display-6">{{ email }}</div>
     <button id="sign_out" class="mt-4 btn btn-danger" @click="signOut">
       Logout
@@ -17,11 +17,29 @@ import axios from "axios";
 export default {
   data() {
     return {
-      email: localStorage.getItem("userEmail") || "Unknown User",
+      email: "Loading...", // Default value while fetching data
       logoutSuccess: false,
     };
   },
+  mounted() {
+    this.fetchUserEmail();
+  },
   methods: {
+    async fetchUserEmail() {
+      try {
+        const response = await axios.get("http://localhost:5000/user", {
+          withCredentials: true,
+        });
+
+        if (response.status === 200) {
+          this.email = response.data.email;
+        } else {
+          console.error("Error fetching user email:", response.data.message);
+        }
+      } catch (error) {
+        console.error("Error fetching user email:", error);
+      }
+    },
     async signOut() {
       try {
         const response = await axios.delete("http://localhost:5000/logout", {
@@ -29,9 +47,6 @@ export default {
         });
 
         if (response.status === 200) {
-          localStorage.removeItem("userEmail");
-          localStorage.removeItem("userId");
-
           // Update logoutSuccess to display the message
           this.logoutSuccess = true;
 

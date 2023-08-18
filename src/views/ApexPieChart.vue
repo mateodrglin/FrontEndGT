@@ -11,7 +11,7 @@
 
 <script>
 import { ref } from "vue";
-import { useApexCharts } from "vue3-apexcharts";
+import useApexCharts from "vue3-apexcharts";
 
 export default {
   props: {
@@ -24,6 +24,8 @@ export default {
     const chartOptions = ref({
       chart: {
         type: "pie",
+        background: "#f4f4f4", // Background color of the chart
+        fontFamily: "Arial, sans-serif", // Font family for the chart
       },
       labels: props.chartData.labels,
       responsive: [
@@ -39,6 +41,26 @@ export default {
           },
         },
       ],
+      annotations: {
+        points: props.chartData.labels.map((label, index) => ({
+          x: index,
+          y: props.chartData.datasets[0].data[index],
+          marker: {
+            size: 8,
+            fillColor: "#fff",
+            strokeWidth: 0,
+          },
+          label: {
+            borderColor: "#333",
+            offsetY: 0,
+            style: {
+              color: "#FFD700",
+              background: "#fff",
+            },
+            text: label,
+          },
+        })),
+      },
     });
 
     const chartSeries = ref(props.chartData.datasets[0].data);
