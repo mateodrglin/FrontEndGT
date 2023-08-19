@@ -150,7 +150,12 @@
       Calculate & Save
     </button>
   </div>
+  <button @click="showPriceModal = true" class="change-prices-button">
+    Change Prices
+  </button>
 
+  <!-- Price Edit Modal -->
+  <div v-if="showPriceModal" class="price-edit-modal"></div>
   <div v-if="selectedSpot === 2" class="datas">
     <!-- Orc Camp Spot -->
     <h1>Import Loot for Orc Camp</h1>
@@ -529,6 +534,7 @@ import axios from "axios";
 export default {
   data() {
     return {
+      showPriceModal: false,
       items: {
         1: {
           item1: null,
@@ -606,6 +612,11 @@ export default {
     },
   },
   methods: {
+    async confirmPriceChanges() {
+      // 1. Update the prices in the backend using the provided endpoint.
+      // 2. Close the modal.
+      // 3. Optionally show a success message or handle errors.
+    },
     selectSpot(spotNumber) {
       this.selectedSpot = spotNumber;
     },
@@ -893,5 +904,35 @@ export default {
   color: red;
   font-size: 12px;
   margin-top: 5px;
+}
+.change-prices-button {
+  background-color: #f7f7f7;
+  border: 1px solid #ccc;
+  padding: 10px 20px;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: background-color 0.3s;
+}
+
+.change-prices-button:hover {
+  background-color: #e5e5e5;
+}
+
+.price-edit-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  padding: 20px;
+  border: 1px solid #ccc;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+}
+
+.price-edit-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
 }
 </style>
