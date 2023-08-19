@@ -155,7 +155,29 @@
   </button>
 
   <!-- Price Edit Modal -->
-  <div v-if="showPriceModal" class="price-edit-modal"></div>
+  <div v-if="showPriceModal" class="price-edit-modal">
+    <h2>Edit Prices for Spot {{ selectedSpot }}</h2>
+
+    <!-- This is where you insert the provided code -->
+    <div
+      v-for="item in items[selectedSpot]"
+      v-if="item && item.itemName && item.price !== undefined"
+      :key="item.itemName"
+      class="price-edit-item"
+    >
+      <label :for="item.itemName">{{ item.itemName }}</label>
+      <input
+        v-model="item.price"
+        :id="item.itemName"
+        type="number"
+        :placeholder="item.price || 'No price available'"
+      />
+    </div>
+
+    <button @click="confirmPriceChanges">Confirm</button>
+    <button @click="showPriceModal = false">Cancel</button>
+  </div>
+
   <div v-if="selectedSpot === 2" class="datas">
     <!-- Orc Camp Spot -->
     <h1>Import Loot for Orc Camp</h1>
@@ -534,6 +556,8 @@ import axios from "axios";
 export default {
   data() {
     return {
+      item: null,
+      prices: {},
       showPriceModal: false,
       items: {
         1: {
@@ -611,16 +635,44 @@ export default {
       return Math.round(average);
     },
   },
+  async mounted() {
+    // Fetch prices when the component is mounted
+    await this.fetchPrices();
+  },
+
   methods: {
+    async fetchPrices() {
+      if (this.selectedSpot !== null && this.selectedSpot !== undefined) {
+        axios
+          .get(`/getPrices/${this.selectedSpot}`)
+          .then(/* handle response */)
+          .catch(/* handle error */);
+      } else {
+        console.error("No spot selected");
+        return; // Add this line to exit the method early
+      }
+
+      try {
+        const response = await axios.get(
+          "http://localhost:5000/getPrices/" + this.selectedSpot,
+          { withCredentials: true }
+        );
+        this.items[this.selectedSpot] = response.data.items; // This populates the fetched data.
+      } catch (error) {
+        console.error("Error fetching prices:", error);
+      }
+    },
+
     async confirmPriceChanges() {
       // 1. Update the prices in the backend using the provided endpoint.
       // 2. Close the modal.
       // 3. Optionally show a success message or handle errors.
     },
+
     selectSpot(spotNumber) {
       this.selectedSpot = spotNumber;
+      console.log("Selected items:", this.items[this.selectedSpot]);
     },
-
     resetFields() {
       for (let item in this.items[this.selectedSpot]) {
         this.items[this.selectedSpot][item] = null;
@@ -630,26 +682,11 @@ export default {
     },
     async calculateAndSave() {
       let currentTotal = 0;
-      const prices = {
-        item1: 17500,
-        item2: 151000,
-        item3: 152000,
-        item4: 1050000,
-        item5: 2601000,
-        item6: 3000000,
-        item7: 9841740,
-        item8: 10000000,
-        item9: 19400,
-        item10: 50000,
-        item1_spot2: 18500,
-        item1_spot3: 19000,
-        item5_spot3: 3000000,
-        item6_spot3: 183000000,
-        item7_spot3: 14649855,
-        item9_spot3: 135000,
-        item11_spot3: 30000,
-      };
-
+      for (let item in currentItems) {
+        if (this.prices[item]) {
+          currentTotal += (currentItems[item] || 0) * this.prices[item];
+        }
+      }
       let currentHours = parseFloat(this.hoursSpent[this.selectedSpot] || 0);
       let currentMinutes = parseFloat(
         this.minutesSpent[this.selectedSpot] || 0
@@ -687,7 +724,6 @@ export default {
         2: "Orc Camp",
         3: "Bloody Monastery",
       };
-
       const currentSpotName = spotNames[this.selectedSpot];
 
       // reset after save and calc
@@ -721,6 +757,7 @@ export default {
       this.minutesSpent[this.selectedSpot] = this.lastSessionMinutes;
     },
   },
+
   watch: {
     minutesSpent: {
       deep: true,
