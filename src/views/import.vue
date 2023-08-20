@@ -153,29 +153,24 @@
   <button @click="showPriceModal = true" class="change-prices-button">
     Change Prices
   </button>
-
   <!-- Price Edit Modal -->
   <div v-if="showPriceModal" class="price-edit-modal">
     <h2>Edit Prices for Spot {{ selectedSpot }}</h2>
 
-    <!-- This is where you insert the provided code -->
-    <div
-      v-for="item in items[selectedSpot]"
-      v-if="item && item.itemName && item.price !== undefined"
-      :key="item.itemName"
-      class="price-edit-item"
-    >
-      <label :for="item.itemName">{{ item.itemName }}</label>
+    <!-- Display input fields for each item in the selected spot -->
+    <div v-for="item in items" :key="item.itemName">
+      <label>{{ item.itemName }}</label>
       <input
-        v-model="item.price"
-        :id="item.itemName"
         type="number"
-        :placeholder="item.price || 'No price available'"
+        v-model="editedPrices[item.itemName]"
+        min="0"
+        placeholder="Enter price"
       />
     </div>
 
-    <button @click="confirmPriceChanges">Confirm</button>
-    <button @click="showPriceModal = false">Cancel</button>
+    <!-- Confirm and Cancel buttons -->
+    <button @click="confirmEdit">Confirm</button>
+    <button @click="cancelEdit">Cancel</button>
   </div>
 
   <div v-if="selectedSpot === 2" class="datas">
@@ -557,6 +552,7 @@ export default {
   data() {
     return {
       item: null,
+      editedPrices: {},
       prices: {},
       showPriceModal: false,
       items: {
@@ -636,11 +632,39 @@ export default {
     },
   },
   async mounted() {
-    // Fetch prices when the component is mounted
-    await this.fetchPrices();
+    if (this.selectedSpot) {
+      await this.fetchPrices();
+    }
   },
 
   methods: {
+    confirmEdit() {
+      // Logging the current state
+      console.log("items:", this.items);
+      console.log("editedPrices:", this.editedPrices);
+
+      // TODO: Validate edited prices if needed
+
+      // Update the main prices with edited prices
+      this.items.forEach((item) => {
+        if (this.editedPrices[item.itemName]) {
+          item.price = this.editedPrices[item.itemName];
+        }
+      });
+
+      // Optionally, send the updated prices to server for persistence
+
+      // Close the modal
+      this.showPriceModal = false;
+    },
+
+    cancelEdit() {
+      // Reset edited prices
+      this.editedPrices = {};
+
+      // Close the modal
+      this.showPriceModal = false;
+    },
     async fetchPrices() {
       if (this.selectedSpot !== null && this.selectedSpot !== undefined) {
         axios
