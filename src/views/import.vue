@@ -18,6 +18,9 @@
           min="0"
           v-model="items[1].item1"
         /><br />
+
+        <input v-model="applyItem1Discount" type="checkbox" /> Apply discount
+        <p>Item 1 Price: {{ item1_discountedPrice }}</p>
       </div>
       <div class="box">
         <img class="loot1" src="@/assets/bsarmor.png" />
@@ -29,6 +32,7 @@
           min="0"
           v-model="items[1].item2"
         /><br />
+        <input type="checkbox" v-model="item5_discount" /> Apply Discount<br />
       </div>
       <div class="box">
         <img class="loot1" src="@/assets/bsweapon.png" />
@@ -40,6 +44,8 @@
           min="0"
           v-model="items[1].item3"
         /><br />
+        <br />
+        <input type="checkbox" v-model="item5_discount" /> Apply Discount<br />
       </div>
       <div class="box">
         <img class="loot1" src="@/assets/sbmc.png" />
@@ -51,6 +57,7 @@
           min="0"
           v-model="items[1].item4"
         /><br />
+        <input type="checkbox" v-model="item4_discount" /> Apply Discount<br />
       </div>
       <div class="box">
         <img class="loot1" src="@/assets/hoaf.png" />
@@ -62,6 +69,7 @@
           min="0"
           v-model="items[1].item5"
         /><br />
+        <input type="checkbox" v-model="item5_discount" /> Apply Discount<br />
       </div>
       <div class="box">
         <img class="loot1" src="@/assets/vflame.png" />
@@ -73,6 +81,7 @@
           min="0"
           v-model="items[1].item6"
         /><br />
+        <input type="checkbox" v-model="item6_discount" /> Apply Discount<br />
       </div>
       <div class="box">
         <img class="loot1" src="@/assets/Sotfn.png" />
@@ -84,6 +93,7 @@
           min="0"
           v-model="items[1].item7"
         /><br />
+        <input type="checkbox" v-model="item7_discount" /> Apply Discount<br />
       </div>
       <div class="box">
         <img class="loot1" src="@/assets/sov.png" />
@@ -95,6 +105,7 @@
           min="0"
           v-model="items[1].item8"
         /><br />
+        <input type="checkbox" v-model="item8_discount" /> Apply Discount<br />
       </div>
       <div class="box">
         <img class="loot1" src="@/assets/tos.png" />
@@ -106,6 +117,7 @@
           min="0"
           v-model="items[1].item9"
         /><br />
+        <input type="checkbox" v-model="item9_discount" /> Apply Discount<br />
       </div>
       <div class="box">
         <img class="loot1" src="@/assets/mopm.png" />
@@ -117,6 +129,7 @@
           min="0"
           v-model="items[1].item10"
         /><br />
+        <input type="checkbox" v-model="item10_discount" /> Apply Discount<br />
       </div>
     </div>
     <div class="time-input-container">
@@ -165,6 +178,8 @@
           min="0"
           v-model="items[2].item1_spot2"
         /><br />
+        <input type="checkbox" v-model="item1_spot2_discount" /> Apply
+        Discount<br />
       </div>
       <div class="box">
         <img class="loot1" src="@/assets/bsarmor.png" />
@@ -176,6 +191,7 @@
           min="0"
           v-model="items[2].item2"
         /><br />
+        <input type="checkbox" v-model="item2_discount" /> Apply Discount<br />
       </div>
       <div class="box">
         <img class="loot1" src="@/assets/bsweapon.png" />
@@ -187,6 +203,7 @@
           min="0"
           v-model="items[2].item3"
         /><br />
+        <input type="checkbox" v-model="item3_discount" /> Apply Discount<br />
       </div>
       <div class="box">
         <img class="loot1" src="@/assets/sbmc.png" />
@@ -198,6 +215,7 @@
           min="0"
           v-model="items[2].item4"
         /><br />
+        <input type="checkbox" v-model="item4_discount" /> Apply Discount<br />
       </div>
       <div class="box">
         <img class="loot1" src="@/assets/hoaf.png" />
@@ -209,6 +227,7 @@
           min="0"
           v-model="items[2].item5"
         /><br />
+        <input type="checkbox" v-model="item5_discount" /> Apply Discount<br />
       </div>
       <div class="box">
         <img class="loot1" src="@/assets/vflame.png" />
@@ -220,6 +239,7 @@
           min="0"
           v-model="items[2].item6"
         /><br />
+        <input type="checkbox" v-model="item6_discount" /> Apply Discount<br />
       </div>
       <div class="box">
         <img class="loot1" src="@/assets/Sotfn.png" />
@@ -231,6 +251,7 @@
           min="0"
           v-model="items[2].item7"
         /><br />
+        <input type="checkbox" v-model="item7_discount" /> Apply Discount<br />
       </div>
       <div class="box">
         <img class="loot1" src="@/assets/sov.png" />
@@ -242,6 +263,7 @@
           min="0"
           v-model="items[2].item8"
         /><br />
+        <input type="checkbox" v-model="item8_discount" /> Apply Discount<br />
       </div>
       <div class="box">
         <img class="loot1" src="@/assets/tos.png" />
@@ -253,6 +275,7 @@
           min="0"
           v-model="items[2].item9"
         /><br />
+        <input type="checkbox" v-model="item9_discount" /> Apply Discount<br />
       </div>
       <div class="box">
         <img class="loot1" src="@/assets/mopm.png" />
@@ -264,6 +287,7 @@
           min="0"
           v-model="items[2].item10"
         /><br />
+        <input type="checkbox" v-model="item10_discount" /> Apply Discount<br />
       </div>
     </div>
     <div class="time-input-container">
@@ -311,6 +335,8 @@
           min="0"
           v-model="items[3].item1_spot3"
         /><br />
+        <input type="checkbox" v-model="item1_spot3_discount" /> Apply
+        Discount<br />
       </div>
       <div class="box">
         <img class="loot1" src="@/assets/bsarmor.png" />
@@ -322,6 +348,7 @@
           min="0"
           v-model="items[3].item2"
         /><br />
+        <input type="checkbox" v-model="item2_discount" /> Apply Discount<br />
       </div>
       <div class="box">
         <img class="loot1" src="@/assets/bsweapon.png" />
@@ -333,6 +360,7 @@
           min="0"
           v-model="items[3].item3"
         /><br />
+        <input type="checkbox" v-model="item3_discount" /> Apply Discount<br />
       </div>
       <div class="box">
         <img class="loot1" src="@/assets/sbmc.png" />
@@ -344,6 +372,7 @@
           min="0"
           v-model="items[3].item4"
         /><br />
+        <input type="checkbox" v-model="item4_discount" /> Apply Discount<br />
       </div>
       <div class="box">
         <img class="loot1" src="@/assets/narcl.png" />
@@ -355,6 +384,8 @@
           min="0"
           v-model="items[3].item5_spot3"
         /><br />
+        <input type="checkbox" v-model="item5_spot3_discount" /> Apply
+        Discount<br />
       </div>
       <div class="box">
         <img class="loot1" src="@/assets/mnail.png" />
@@ -366,6 +397,8 @@
           min="0"
           v-model="items[3].item6_spot3"
         /><br />
+        <input type="checkbox" v-model="item6_spot3_discount" /> Apply
+        Discount<br />
       </div>
       <div class="box">
         <img class="loot1" src="@/assets/sdn.png" />
@@ -377,6 +410,8 @@
           min="0"
           v-model="items[3].item7_spot3"
         /><br />
+        <input type="checkbox" v-model="item7_spot3_discount" /> Apply
+        Discount<br />
       </div>
       <div class="box">
         <img class="loot1" src="@/assets/sov.png" />
@@ -388,6 +423,7 @@
           min="0"
           v-model="items[3].item8"
         /><br />
+        <input type="checkbox" v-model="item8_discount" /> Apply Discount<br />
       </div>
       <div class="box">
         <img class="loot1" src="@/assets/tob.png" />
@@ -399,6 +435,8 @@
           min="0"
           v-model="items[3].item9_spot3"
         /><br />
+        <input type="checkbox" v-model="item9_spot3_discount" /> Apply
+        Discount<br />
       </div>
       <div class="box">
         <img class="loot1" src="@/assets/mopm.png" />
@@ -410,6 +448,8 @@
           min="0"
           v-model="items[3].item10"
         /><br />
+        <input type="checkbox" v-model="item10_spot3_discount" /> Apply
+        Discount<br />
       </div>
       <div class="box">
         <img class="loot1" src="@/assets/ctobs.png" />
@@ -421,6 +461,8 @@
           min="0"
           v-model="items[3].item11_spot3"
         /><br />
+        <input type="checkbox" v-model="item11_spot3_discount" /> Apply
+        Discount<br />
       </div>
     </div>
     <div class="time-input-container">
@@ -524,6 +566,7 @@
     </p>
   </div>
 </template>
+
 <script>
 import axios from "axios";
 export default {
@@ -567,6 +610,25 @@ export default {
           item10: null,
           item11_spot3: null,
         },
+        item5_discount: null,
+
+        item1_discount: false,
+        item2_discount: false,
+        item3_discount: false,
+        item4_discount: false,
+        item5_discount: false,
+        item6_discount: false,
+        item7_discount: false,
+        item8_discount: false,
+        item9_discount: false,
+        item10_discount: false,
+        item1_spot2_discount: false,
+        item1_spot3_discount: false,
+        item5_spot3_discount: false,
+        item6_spot3_discount: false,
+        item7_spot3_discount: false,
+        item9_spot3_discount: false,
+        item11_spot3_discount: false,
       },
       hoursSpent: {
         1: null,
@@ -583,6 +645,7 @@ export default {
         2: null,
         3: null,
       },
+
       selectedSpot: null,
       sessionTotal: 0,
       accumulatedTotal: 0,
@@ -594,6 +657,94 @@ export default {
     };
   },
   computed: {
+    //checkboxes
+    item1_discountedPrice() {
+      return this.item1_discount
+        ? this.items[1].item1 * 0.845
+        : this.items[1].item1;
+    },
+    item2_discountedPrice() {
+      return this.item2_discount
+        ? this.items[1].item2 * 0.845
+        : this.items[1].item2;
+    },
+    item3_discountedPrice() {
+      return this.item3_discount
+        ? this.items[1].item3 * 0.845
+        : this.items[1].item3;
+    },
+    item4_discountedPrice() {
+      return this.item4_discount
+        ? this.items[1].item4 * 0.845
+        : this.items[1].item4;
+    },
+    item5_discountedPrice() {
+      return this.item5_discount
+        ? this.items[1].item5 * 0.845
+        : this.items[1].item5;
+    },
+    item6_discountedPrice() {
+      return this.item6_discount
+        ? this.items[1].item6 * 0.845
+        : this.items[1].item6;
+    },
+    item7_discountedPrice() {
+      return this.item7_discount
+        ? this.items[1].item7 * 0.845
+        : this.items[1].item7;
+    },
+    item8_discountedPrice() {
+      return this.item8_discount
+        ? this.items[1].item8 * 0.845
+        : this.items[1].item8;
+    },
+    item9_discountedPrice() {
+      return this.item9_discount
+        ? this.items[1].item9 * 0.845
+        : this.items[1].item9;
+    },
+    item10_discountedPrice() {
+      return this.item10_discount
+        ? this.items[1].item10 * 0.845
+        : this.items[1].item10;
+    },
+    item1_spot2_discountedPrice() {
+      return this.item1_spot2_discount
+        ? this.items[2].item1 * 0.845
+        : this.items[2].item1;
+    },
+    item1_spot3_discountedPrice() {
+      return this.item1_spot3_discount
+        ? this.items[3].item1 * 0.845
+        : this.items[3].item1;
+    },
+    item5_spot3_discountedPrice() {
+      return this.item5_spot3_discount
+        ? this.items[3].item5 * 0.845
+        : this.items[3].item5; // Assuming spot3 is represented as `items[3]`
+    },
+    item6_spot3_discountedPrice() {
+      return this.item6_spot3_discount
+        ? this.items[3].item6 * 0.845
+        : this.items[3].item6;
+    },
+    item7_spot3_discountedPrice() {
+      return this.item7_spot3_discount
+        ? this.items[3].item7 * 0.845
+        : this.items[3].item7;
+    },
+    item9_spot3_discountedPrice() {
+      return this.item9_spot3_discount
+        ? this.items[3].item9 * 0.845
+        : this.items[3].item9;
+    },
+    item11_spot3_discountedPrice() {
+      return this.item11_spot3_discount_1
+        ? this.items[3].item11 * 0.845
+        : this.items[3].item11;
+    },
+    //st
+
     total() {
       return this.accumulatedTotal;
     },
