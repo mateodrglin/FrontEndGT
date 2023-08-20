@@ -150,28 +150,6 @@
       Calculate & Save
     </button>
   </div>
-  <button @click="showPriceModal = true" class="change-prices-button">
-    Change Prices
-  </button>
-  <!-- Price Edit Modal -->
-  <div v-if="showPriceModal" class="price-edit-modal">
-    <h2>Edit Prices for Spot {{ selectedSpot }}</h2>
-
-    <!-- Display input fields for each item in the selected spot -->
-    <div v-for="item in items" :key="item.itemName">
-      <label>{{ item.itemName }}</label>
-      <input
-        type="number"
-        v-model="editedPrices[item.itemName]"
-        min="0"
-        placeholder="Enter price"
-      />
-    </div>
-
-    <!-- Confirm and Cancel buttons -->
-    <button @click="confirmEdit">Confirm</button>
-    <button @click="cancelEdit">Cancel</button>
-  </div>
 
   <div v-if="selectedSpot === 2" class="datas">
     <!-- Orc Camp Spot -->
@@ -551,10 +529,6 @@ import axios from "axios";
 export default {
   data() {
     return {
-      item: null,
-      editedPrices: {},
-      prices: {},
-      showPriceModal: false,
       items: {
         1: {
           item1: null,
@@ -631,72 +605,11 @@ export default {
       return Math.round(average);
     },
   },
-  async mounted() {
-    if (this.selectedSpot) {
-      await this.fetchPrices();
-    }
-  },
-
   methods: {
-    confirmEdit() {
-      // Logging the current state
-      console.log("items:", this.items);
-      console.log("editedPrices:", this.editedPrices);
-
-      // TODO: Validate edited prices if needed
-
-      // Update the main prices with edited prices
-      this.items.forEach((item) => {
-        if (this.editedPrices[item.itemName]) {
-          item.price = this.editedPrices[item.itemName];
-        }
-      });
-
-      // Optionally, send the updated prices to server for persistence
-
-      // Close the modal
-      this.showPriceModal = false;
-    },
-
-    cancelEdit() {
-      // Reset edited prices
-      this.editedPrices = {};
-
-      // Close the modal
-      this.showPriceModal = false;
-    },
-    async fetchPrices() {
-      if (this.selectedSpot !== null && this.selectedSpot !== undefined) {
-        axios
-          .get(`/getPrices/${this.selectedSpot}`)
-          .then(/* handle response */)
-          .catch(/* handle error */);
-      } else {
-        console.error("No spot selected");
-        return; // Add this line to exit the method early
-      }
-
-      try {
-        const response = await axios.get(
-          "http://localhost:5000/getPrices/" + this.selectedSpot,
-          { withCredentials: true }
-        );
-        this.items[this.selectedSpot] = response.data.items; // This populates the fetched data.
-      } catch (error) {
-        console.error("Error fetching prices:", error);
-      }
-    },
-
-    async confirmPriceChanges() {
-      // 1. Update the prices in the backend using the provided endpoint.
-      // 2. Close the modal.
-      // 3. Optionally show a success message or handle errors.
-    },
-
     selectSpot(spotNumber) {
       this.selectedSpot = spotNumber;
-      console.log("Selected items:", this.items[this.selectedSpot]);
     },
+
     resetFields() {
       for (let item in this.items[this.selectedSpot]) {
         this.items[this.selectedSpot][item] = null;
@@ -706,11 +619,26 @@ export default {
     },
     async calculateAndSave() {
       let currentTotal = 0;
-      for (let item in currentItems) {
-        if (this.prices[item]) {
-          currentTotal += (currentItems[item] || 0) * this.prices[item];
-        }
-      }
+      const prices = {
+        item1: 17500,
+        item2: 151000,
+        item3: 152000,
+        item4: 1050000,
+        item5: 2601000,
+        item6: 3000000,
+        item7: 9841740,
+        item8: 10000000,
+        item9: 19400,
+        item10: 50000,
+        item1_spot2: 18500,
+        item1_spot3: 19000,
+        item5_spot3: 3000000,
+        item6_spot3: 183000000,
+        item7_spot3: 14649855,
+        item9_spot3: 135000,
+        item11_spot3: 30000,
+      };
+
       let currentHours = parseFloat(this.hoursSpent[this.selectedSpot] || 0);
       let currentMinutes = parseFloat(
         this.minutesSpent[this.selectedSpot] || 0
@@ -748,6 +676,7 @@ export default {
         2: "Orc Camp",
         3: "Bloody Monastery",
       };
+
       const currentSpotName = spotNames[this.selectedSpot];
 
       // reset after save and calc
@@ -781,7 +710,6 @@ export default {
       this.minutesSpent[this.selectedSpot] = this.lastSessionMinutes;
     },
   },
-
   watch: {
     minutesSpent: {
       deep: true,
@@ -965,35 +893,5 @@ export default {
   color: red;
   font-size: 12px;
   margin-top: 5px;
-}
-.change-prices-button {
-  background-color: #f7f7f7;
-  border: 1px solid #ccc;
-  padding: 10px 20px;
-  cursor: pointer;
-  margin-top: 20px;
-  transition: background-color 0.3s;
-}
-
-.change-prices-button:hover {
-  background-color: #e5e5e5;
-}
-
-.price-edit-modal {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: #fff;
-  padding: 20px;
-  border: 1px solid #ccc;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-  z-index: 1000;
-}
-
-.price-edit-item {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 10px;
 }
 </style>
