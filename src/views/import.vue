@@ -529,7 +529,9 @@
           : "-"
       }}
     </p>
-    <div class="total-price">Total Price: {{ totalDiscountedPrice }}</div>
+    <div class="total-price">
+      Total Price after taxes: {{ totalDiscountedPrice }}
+    </div>
   </div>
   <!--lijeva strana last session-->
   <div class="session-result-container">
@@ -592,22 +594,23 @@ export default {
   data() {
     return {
       item1_discount: false,
-      item2_discount: false,
-      item3_discount: false,
-      item4_discount: false,
-      item5_discount: false,
-      item6_discount: false,
+      item2_discount: true,
+      item3_discount: true,
+      item4_discount: true,
+      item5_discount: true,
+      item6_discount: true,
       item7_discount: false,
-      item8_discount: false,
-      item9_discount: false,
+      item8_discount: true,
+      item9_discount: true,
       item10_discount: false,
       item1_spot2_discount: false,
       item1_spot3_discount: false,
-      item5_spot3_discount: false,
-      item6_spot3_discount: false,
+      item5_spot3_discount: true,
+      item6_spot3_discount: true,
       item7_spot3_discount: false,
-      item9_spot3_discount: false,
-      item11_spot3_discount: false,
+      item9_spot3_discount: true,
+      item11_spot3_discount: true,
+      sessionDiscountedTotal: 0,
       items: {
         1: {
           item1: null,
@@ -761,25 +764,78 @@ export default {
         ? this.items[3].item11 * prices.item11_spot3 * 0.845
         : this.items[3].item11 * prices.item11_spot3;
     },
+    //discount calc
     totalDiscountedPrice() {
+      const item1Value = isNaN(this.item1_discountedPrice)
+        ? 0
+        : this.item1_discountedPrice;
+      const item2Value = isNaN(this.item2_discountedPrice)
+        ? 0
+        : this.item2_discountedPrice;
+      const item3Value = isNaN(this.item3_discountedPrice)
+        ? 0
+        : this.item3_discountedPrice;
+      const item4Value = isNaN(this.item4_discountedPrice)
+        ? 0
+        : this.item4_discountedPrice;
+      const item5Value = isNaN(this.item5_discountedPrice)
+        ? 0
+        : this.item5_discountedPrice;
+      const item6Value = isNaN(this.item6_discountedPrice)
+        ? 0
+        : this.item6_discountedPrice;
+      const item7Value = isNaN(this.item7_discountedPrice)
+        ? 0
+        : this.item7_discountedPrice;
+      const item8Value = isNaN(this.item8_discountedPrice)
+        ? 0
+        : this.item8_discountedPrice;
+      const item9Value = isNaN(this.item9_discountedPrice)
+        ? 0
+        : this.item9_discountedPrice;
+      const item10Value = isNaN(this.item10_discountedPrice)
+        ? 0
+        : this.item10_discountedPrice;
+      const item1_spot2_Value = isNaN(this.item1_spot2_discountedPrice)
+        ? 0
+        : this.item1_spot2_discountedPrice;
+      const item1_spot3_Value = isNaN(this.item1_spot3_discountedPrice)
+        ? 0
+        : this.item1_spot3_discountedPrice;
+      const item5_spot3_Value = isNaN(this.item5_spot3_discountedPrice)
+        ? 0
+        : this.item5_spot3_discountedPrice;
+      const item6_spot3_Value = isNaN(this.item6_spot3_discountedPrice)
+        ? 0
+        : this.item6_spot3_discountedPrice;
+      const item7_spot3_Value = isNaN(this.item7_spot3_discountedPrice)
+        ? 0
+        : this.item7_spot3_discountedPrice;
+      const item9_spot3_Value = isNaN(this.item9_spot3_discountedPrice)
+        ? 0
+        : this.item9_spot3_discountedPrice;
+      const item11_spot3_Value = isNaN(this.item11_spot3_discountedPrice)
+        ? 0
+        : this.item11_spot3_discountedPrice;
+
       return (
-        this.item1_discountedPrice +
-        this.item2_discountedPrice +
-        this.item3_discountedPrice +
-        this.item4_discountedPrice +
-        this.item5_discountedPrice +
-        this.item6_discountedPrice +
-        this.item7_discountedPrice +
-        this.item8_discountedPrice +
-        this.item9_discountedPrice +
-        this.item10_discountedPrice +
-        this.item1_spot2_discountedPrice +
-        this.item1_spot3_discountedPrice +
-        this.item5_spot3_discountedPrice +
-        this.item6_spot3_discountedPrice +
-        this.item7_spot3_discountedPrice +
-        this.item9_spot3_discountedPrice +
-        this.item11_spot3_discountedPrice
+        item1Value +
+        item2Value +
+        item3Value +
+        item4Value +
+        item5Value +
+        item6Value +
+        item7Value +
+        item8Value +
+        item9Value +
+        item10Value +
+        item1_spot2_Value +
+        item1_spot3_Value +
+        item5_spot3_Value +
+        item6_spot3_Value +
+        item7_spot3_Value +
+        item9_spot3_Value +
+        item11_spot3_Value
       );
     },
 
@@ -808,7 +864,8 @@ export default {
     },
     async calculateAndSave() {
       let currentTotal = 0;
-
+      this.sessionDiscountedTotal = this.totalDiscountedPrice;
+      console.log("totalDiscountedPrice:", this.totalDiscountedPrice);
       let currentHours = parseFloat(this.hoursSpent[this.selectedSpot] || 0);
       let currentMinutes = parseFloat(
         this.minutesSpent[this.selectedSpot] || 0
@@ -856,6 +913,7 @@ export default {
         grindingSpotName: currentSpotName,
         items: this.items[this.selectedSpot],
         total: this.lastSessionTotal,
+        totalDiscounted: this.totalDiscountedPrice,
         average: Math.round(
           this.lastSessionTotal /
             (this.lastSessionHours + this.lastSessionMinutes / 60)
