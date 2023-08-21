@@ -19,7 +19,7 @@
           v-model="items[1].item1"
         /><br />
 
-        <input v-model="applyItem1Discount" type="checkbox" /> Apply discount
+        <input v-model="item1_discount" type="checkbox" /> Apply discount
       </div>
       <div class="box">
         <img class="loot1" src="@/assets/bsarmor.png" />
@@ -31,7 +31,7 @@
           min="0"
           v-model="items[1].item2"
         /><br />
-        <input type="checkbox" v-model="item5_discount" /> Apply Discount<br />
+        <input type="checkbox" v-model="item2_discount" /> Apply Discount<br />
       </div>
       <div class="box">
         <img class="loot1" src="@/assets/bsweapon.png" />
@@ -44,7 +44,7 @@
           v-model="items[1].item3"
         /><br />
         <br />
-        <input type="checkbox" v-model="item5_discount" /> Apply Discount<br />
+        <input type="checkbox" v-model="item3_discount" /> Apply Discount<br />
       </div>
       <div class="box">
         <img class="loot1" src="@/assets/sbmc.png" />
@@ -447,8 +447,7 @@
           min="0"
           v-model="items[3].item10"
         /><br />
-        <input type="checkbox" v-model="item10_spot3_discount" /> Apply
-        Discount<br />
+        <input type="checkbox" v-model="item10_discount" /> Apply Discount<br />
       </div>
       <div class="box">
         <img class="loot1" src="@/assets/ctobs.png" />
@@ -592,6 +591,23 @@ const prices = {
 export default {
   data() {
     return {
+      item1_discount: false,
+      item2_discount: false,
+      item3_discount: false,
+      item4_discount: false,
+      item5_discount: false,
+      item6_discount: false,
+      item7_discount: false,
+      item8_discount: false,
+      item9_discount: false,
+      item10_discount: false,
+      item1_spot2_discount: false,
+      item1_spot3_discount: false,
+      item5_spot3_discount: false,
+      item6_spot3_discount: false,
+      item7_spot3_discount: false,
+      item9_spot3_discount: false,
+      item11_spot3_discount: false,
       items: {
         1: {
           item1: null,
@@ -630,25 +646,6 @@ export default {
           item10: null,
           item11_spot3: null,
         },
-        item5_discount: null,
-
-        item1_discount: false,
-        item2_discount: false,
-        item3_discount: false,
-        item4_discount: false,
-        item5_discount: false,
-        item6_discount: false,
-        item7_discount: false,
-        item8_discount: false,
-        item9_discount: false,
-        item10_discount: false,
-        item1_spot2_discount: false,
-        item1_spot3_discount: false,
-        item5_spot3_discount: false,
-        item6_spot3_discount: false,
-        item7_spot3_discount: false,
-        item9_spot3_discount: false,
-        item11_spot3_discount: false,
       },
       hoursSpent: {
         1: null,
@@ -760,7 +757,7 @@ export default {
         : this.items[3].item9 * prices.item9_spot3;
     },
     item11_spot3_discountedPrice() {
-      return this.item11_spot3_discount_1
+      return this.item11_spot3_discount
         ? this.items[3].item11 * prices.item11_spot3 * 0.845
         : this.items[3].item11 * prices.item11_spot3;
     },
@@ -785,9 +782,7 @@ export default {
         this.item11_spot3_discountedPrice
       );
     },
-    total() {
-      return this.accumulatedTotal;
-    },
+
     total() {
       return this.accumulatedTotal;
     },
