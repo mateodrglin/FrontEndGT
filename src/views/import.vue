@@ -20,7 +20,6 @@
         /><br />
 
         <input v-model="applyItem1Discount" type="checkbox" /> Apply discount
-        <p>Item 1 Price: {{ item1_discountedPrice }}</p>
       </div>
       <div class="box">
         <img class="loot1" src="@/assets/bsarmor.png" />
@@ -531,6 +530,7 @@
           : "-"
       }}
     </p>
+    <div class="total-price">Total Price: {{ totalDiscountedPrice }}</div>
   </div>
   <!--lijeva strana last session-->
   <div class="session-result-container">
@@ -569,6 +569,26 @@
 
 <script>
 import axios from "axios";
+const prices = {
+  item1: 17500,
+  item2: 151000,
+  item3: 152000,
+  item4: 1050000,
+  item5: 2601000,
+  item6: 3000000,
+  item7: 9841740,
+  item8: 10000000,
+  item9: 19400,
+  item10: 50000,
+  item1_spot2: 18500,
+  item1_spot3: 19000,
+  item5_spot3: 3000000,
+  item6_spot3: 183000000,
+  item7_spot3: 14649855,
+  item9_spot3: 135000,
+  item11_spot3: 30000,
+};
+
 export default {
   data() {
     return {
@@ -660,91 +680,114 @@ export default {
     //checkboxes
     item1_discountedPrice() {
       return this.item1_discount
-        ? this.items[1].item1 * 0.845
-        : this.items[1].item1;
+        ? this.items[1].item1 * prices.item1 * 0.845
+        : this.items[1].item1 * prices.item1;
     },
     item2_discountedPrice() {
       return this.item2_discount
-        ? this.items[1].item2 * 0.845
-        : this.items[1].item2;
+        ? this.items[1].item2 * prices.item2 * 0.845
+        : this.items[1].item2 * prices.item2;
     },
     item3_discountedPrice() {
       return this.item3_discount
-        ? this.items[1].item3 * 0.845
-        : this.items[1].item3;
+        ? this.items[1].item3 * prices.item3 * 0.845
+        : this.items[1].item3 * prices.item3;
     },
     item4_discountedPrice() {
       return this.item4_discount
-        ? this.items[1].item4 * 0.845
-        : this.items[1].item4;
+        ? this.items[1].item4 * prices.item4 * 0.845
+        : this.items[1].item4 * prices.item4;
     },
     item5_discountedPrice() {
       return this.item5_discount
-        ? this.items[1].item5 * 0.845
-        : this.items[1].item5;
+        ? this.items[1].item5 * prices.item5 * 0.845
+        : this.items[1].item5 * prices.item5;
     },
     item6_discountedPrice() {
       return this.item6_discount
-        ? this.items[1].item6 * 0.845
-        : this.items[1].item6;
+        ? this.items[1].item6 * prices.item6 * 0.845
+        : this.items[1].item6 * prices.item6;
     },
     item7_discountedPrice() {
       return this.item7_discount
-        ? this.items[1].item7 * 0.845
-        : this.items[1].item7;
+        ? this.items[1].item7 * prices.item7 * 0.845
+        : this.items[1].item7 * prices.item7;
     },
     item8_discountedPrice() {
       return this.item8_discount
-        ? this.items[1].item8 * 0.845
-        : this.items[1].item8;
+        ? this.items[1].item8 * prices.item8 * 0.845
+        : this.items[1].item8 * prices.item8;
     },
+
     item9_discountedPrice() {
       return this.item9_discount
-        ? this.items[1].item9 * 0.845
-        : this.items[1].item9;
+        ? this.items[1].item9 * prices.item9 * 0.845
+        : this.items[1].item9 * prices.item9;
     },
     item10_discountedPrice() {
       return this.item10_discount
-        ? this.items[1].item10 * 0.845
-        : this.items[1].item10;
+        ? this.items[1].item10 * prices.item10 * 0.845
+        : this.items[1].item10 * prices.item10;
     },
     item1_spot2_discountedPrice() {
       return this.item1_spot2_discount
-        ? this.items[2].item1 * 0.845
-        : this.items[2].item1;
+        ? this.items[2].item1 * prices.item1_spot2 * 0.845
+        : this.items[2].item1 * prices.item1_spot2;
     },
     item1_spot3_discountedPrice() {
       return this.item1_spot3_discount
-        ? this.items[3].item1 * 0.845
-        : this.items[3].item1;
+        ? this.items[3].item1 * prices.item1_spot3 * 0.845
+        : this.items[3].item1 * prices.item1_spot3;
     },
     item5_spot3_discountedPrice() {
       return this.item5_spot3_discount
-        ? this.items[3].item5 * 0.845
-        : this.items[3].item5; // Assuming spot3 is represented as `items[3]`
+        ? this.items[3].item5 * prices.item5_spot3 * 0.845
+        : this.items[3].item5 * prices.item5_spot3;
     },
     item6_spot3_discountedPrice() {
       return this.item6_spot3_discount
-        ? this.items[3].item6 * 0.845
-        : this.items[3].item6;
+        ? this.items[3].item6 * prices.item6_spot3 * 0.845
+        : this.items[3].item6 * prices.item6_spot3;
     },
     item7_spot3_discountedPrice() {
       return this.item7_spot3_discount
-        ? this.items[3].item7 * 0.845
-        : this.items[3].item7;
+        ? this.items[3].item7 * prices.item7_spot3 * 0.845
+        : this.items[3].item7 * prices.item7_spot3;
     },
     item9_spot3_discountedPrice() {
       return this.item9_spot3_discount
-        ? this.items[3].item9 * 0.845
-        : this.items[3].item9;
+        ? this.items[3].item9 * prices.item9_spot3 * 0.845
+        : this.items[3].item9 * prices.item9_spot3;
     },
     item11_spot3_discountedPrice() {
       return this.item11_spot3_discount_1
-        ? this.items[3].item11 * 0.845
-        : this.items[3].item11;
+        ? this.items[3].item11 * prices.item11_spot3 * 0.845
+        : this.items[3].item11 * prices.item11_spot3;
     },
-    //st
-
+    totalDiscountedPrice() {
+      return (
+        this.item1_discountedPrice +
+        this.item2_discountedPrice +
+        this.item3_discountedPrice +
+        this.item4_discountedPrice +
+        this.item5_discountedPrice +
+        this.item6_discountedPrice +
+        this.item7_discountedPrice +
+        this.item8_discountedPrice +
+        this.item9_discountedPrice +
+        this.item10_discountedPrice +
+        this.item1_spot2_discountedPrice +
+        this.item1_spot3_discountedPrice +
+        this.item5_spot3_discountedPrice +
+        this.item6_spot3_discountedPrice +
+        this.item7_spot3_discountedPrice +
+        this.item9_spot3_discountedPrice +
+        this.item11_spot3_discountedPrice
+      );
+    },
+    total() {
+      return this.accumulatedTotal;
+    },
     total() {
       return this.accumulatedTotal;
     },
@@ -770,25 +813,6 @@ export default {
     },
     async calculateAndSave() {
       let currentTotal = 0;
-      const prices = {
-        item1: 17500,
-        item2: 151000,
-        item3: 152000,
-        item4: 1050000,
-        item5: 2601000,
-        item6: 3000000,
-        item7: 9841740,
-        item8: 10000000,
-        item9: 19400,
-        item10: 50000,
-        item1_spot2: 18500,
-        item1_spot3: 19000,
-        item5_spot3: 3000000,
-        item6_spot3: 183000000,
-        item7_spot3: 14649855,
-        item9_spot3: 135000,
-        item11_spot3: 30000,
-      };
 
       let currentHours = parseFloat(this.hoursSpent[this.selectedSpot] || 0);
       let currentMinutes = parseFloat(
