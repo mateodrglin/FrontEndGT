@@ -510,7 +510,8 @@
       {{
         accumulatedTotal > 0 && (accumulatedHours > 0 || accumulatedMinutes > 0)
           ? Math.round(
-              accumulatedTotal / (accumulatedHours + accumulatedMinutes / 60)
+              totalDiscountedPrice /
+                (accumulatedHours + accumulatedMinutes / 60)
             ).toLocaleString()
           : "-"
       }}
@@ -544,9 +545,11 @@
     </div>
     <p class="session-average-silver">
       {{
-        lastSessionTotal > 0 && (lastSessionHours > 0 || lastSessionMinutes > 0)
+        lastSessionTotalDisc > 0 &&
+        (lastSessionHours > 0 || lastSessionMinutes > 0)
           ? Math.round(
-              lastSessionTotal / (lastSessionHours + lastSessionMinutes / 60)
+              lastSessionTotalDisc /
+                (lastSessionHours + lastSessionMinutes / 60)
             ).toLocaleString()
           : "-"
       }}
@@ -671,6 +674,7 @@ export default {
       accumulatedTotal: 0,
       accumulatedHours: 0,
       lastSessionTotal: 0,
+      lastSessionTotalDisc: 0,
       lastSessionHours: 0,
       accumulatedMinutes: 0,
       lastSessionMinutes: 0,
@@ -846,7 +850,9 @@ export default {
       let totalHoursDecimal =
         this.accumulatedHours + this.accumulatedMinutes / 60;
       let average =
-        totalHoursDecimal > 0 ? this.accumulatedTotal / totalHoursDecimal : 0;
+        totalHoursDecimal > 0
+          ? this.totalDiscountedPrice / totalHoursDecimal
+          : 0;
       return Math.round(average);
     },
   },
@@ -864,7 +870,8 @@ export default {
     },
     async calculateAndSave() {
       let currentTotal = 0;
-      this.sessionDiscountedTotal = this.totalDiscountedPrice;
+      this.lastSessionTotalDisc = this.totalDiscountedPrice;
+
       console.log("totalDiscountedPrice:", this.totalDiscountedPrice);
       let currentHours = parseFloat(this.hoursSpent[this.selectedSpot] || 0);
       let currentMinutes = parseFloat(
@@ -891,6 +898,7 @@ export default {
 
       // last session
       this.lastSessionTotal = currentTotal;
+      this.lastSessionTotalDisc = this.totalDiscountedPrice;
       this.lastSessionHours = totalHoursForSession;
       this.lastSessionMinutes = remainingMinutes;
 
@@ -915,7 +923,7 @@ export default {
         total: this.lastSessionTotal,
         totalDiscounted: this.totalDiscountedPrice,
         average: Math.round(
-          this.lastSessionTotal /
+          this.lastSessionTotalDisc /
             (this.lastSessionHours + this.lastSessionMinutes / 60)
         ),
         hours: this.lastSessionHours,
