@@ -27,6 +27,7 @@ export default {
         background: "#f4f4f4", // Background color of the chart
         fontFamily: "Arial, sans-serif", // Font family for the chart
       },
+
       labels: props.chartData.labels,
       responsive: [
         {
@@ -60,6 +61,26 @@ export default {
             text: label,
           },
         })),
+      },
+      yaxis: {
+        labels: {
+          formatter: (value) => {
+            return `${value.toLocaleString()} Silver`;
+          },
+        },
+      },
+      title: {
+        text: "Total Discounted Silver",
+        align: "center",
+        margin: 10,
+        offsetX: 0,
+        offsetY: 0,
+        floating: false,
+        style: {
+          fontSize: "16px",
+          fontWeight: "bold",
+          color: "#263238", // Adjust the color as needed
+        },
       },
     });
 

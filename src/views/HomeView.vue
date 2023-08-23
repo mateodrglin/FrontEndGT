@@ -1,32 +1,37 @@
 <template>
-  <div class="container">
-    <p class="title">HomeView Dashboard</p>
+  <div class="main-container">
+    <div class="container">
+      <p class="title">HomeView Dashboard</p>
 
-    <!-- Display Accumulated Totals -->
-    <div class="totals-box">
-      <h3>Accumulated Totals</h3>
-      <p>Total Silver: {{ formatNumber(accumulatedTotal.totalSilver) }}</p>
-      <p>
-        Total Discounted Silver:
-        {{ formatNumber(accumulatedTotal.totalDiscounted) }}
-      </p>
+      <!-- Display Accumulated Totals -->
+      <div class="totals-box">
+        <h3>Accumulated Totals</h3>
+        <p>Total Silver: {{ formatNumber(accumulatedTotal.totalSilver) }}</p>
+        <p>
+          Highest Total Silver Earned in Session:
+          {{ formatNumber(highestTotalDiscountedSilver) }}
+        </p>
+        <p>
+          Average Silver: {{ formatNumber(accumulatedTotal.averageSilver) }}
+        </p>
+        <p>Total Hours: {{ formatNumber(accumulatedTotal.totalHours) }}</p>
+      </div>
 
-      <p>Average Silver: {{ formatNumber(accumulatedTotal.averageSilver) }}</p>
-      <p>Total Hours: {{ formatNumber(accumulatedTotal.totalHours) }}</p>
-    </div>
+      <!-- Display Totals Per Spot -->
+      <div class="spot-totals">
+        <h3>Totals Per Spot</h3>
+        <div class="spot-item" v-for="spot in totalsPerSpot" :key="spot._id">
+          <p><strong>Spot:</strong> {{ spot._id }}</p>
+          <p>Total Silver: {{ formatNumber(spot.totalSilver) }}</p>
 
-    <!-- Display Totals Per Spot -->
-    <div class="spot-totals">
-      <h3>Totals Per Spot</h3>
-      <div class="spot-item" v-for="spot in totalsPerSpot" :key="spot._id">
-        <p><strong>Spot:</strong> {{ spot._id }}</p>
-        <p>Total Silver: {{ formatNumber(spot.totalSilver) }}</p>
-        <p>Total Discounted Silver: {{ formatNumber(spot.totalDiscounted) }}</p>
-        <p>Average Silver: {{ formatNumber(spot.averageSilver) }}</p>
-        <p>Total Hours: {{ formatNumber(spot.totalHours) }}</p>
+          <p>
+            Total Discounted Silver: {{ formatNumber(spot.totalDiscounted) }}
+          </p>
+          <p>Average Silver: {{ formatNumber(spot.averageSilver) }}</p>
+          <p>Total Hours: {{ formatNumber(spot.totalHours) }}</p>
+        </div>
       </div>
     </div>
-
     <div class="chart-container">
       <ApexPieChart v-if="dataCollection" :chart-data="dataCollection" />
     </div>
@@ -43,6 +48,7 @@ export default {
   },
   data() {
     return {
+      highestTotalDiscountedSilver: 0,
       dataCollection: null,
       totalsPerSpot: [],
       accumulatedTotal: {},
@@ -50,7 +56,7 @@ export default {
   },
   methods: {
     formatNumber(input) {
-      const number = parseFloat(input); // Ensure the input is parsed as a number
+      const number = parseFloat(input);
       return number.toLocaleString();
     },
   },
@@ -69,8 +75,19 @@ export default {
       this.accumulatedTotal.totalDiscounted =
         this.accumulatedTotal.totalDiscounted || 0;
 
+      // Fetching the highest TotalDisc value
+      const responseHighestTotalDiscountedSilver = await axios.get(
+        "http://localhost:5000/highestTotalDiscountedSilver",
+        {
+          withCredentials: true,
+        }
+      );
+      this.highestTotalDiscountedSilver =
+        responseHighestTotalDiscountedSilver.data.highestTotalDiscountedSilver;
+
+      //chart
       const labels = totalsPerSpot.map((spot) => spot._id);
-      const data = totalsPerSpot.map((spot) => spot.totalSilver);
+      const data = totalsPerSpot.map((spot) => spot.totalDiscounted);
 
       this.dataCollection = {
         labels: labels,
@@ -90,6 +107,9 @@ export default {
 
 <style>
 .container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   font-family: Arial, sans-serif;
   padding: 20px;
   max-width: 800px;
@@ -124,6 +144,19 @@ export default {
 }
 
 .chart-container {
-  margin-top: 20px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-start;
+  position: absolute;
+  top: 5%;
+  right: 5%;
+  border: 2px solid #a0a0a0;
+}
+
+.main-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
 }
 </style>
