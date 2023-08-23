@@ -528,14 +528,17 @@
     <p class="resultm">
       {{ total > 0 ? total.toLocaleString() : "-" }}
     </p>
+    <div class="total-silver-text">Total Silver after taxes:</div>
+    <p class="resultm">
+      {{ TotalDisc > 0 ? TotalDisc.toLocaleString() : "-" }}
+    </p>
 
     <div class="average-silver-text">Average Silver per Hour</div>
     <p class="average-silver">
       {{
-        accumulatedTotal > 0 && (accumulatedHours > 0 || accumulatedMinutes > 0)
+        TotalDisc > 0 && (accumulatedHours > 0 || accumulatedMinutes > 0)
           ? Math.round(
-              totalDiscountedPrice /
-                (accumulatedHours + accumulatedMinutes / 60)
+              TotalDisc / (accumulatedHours + accumulatedMinutes / 60)
             ).toLocaleString()
           : "-"
       }}
@@ -554,15 +557,18 @@
           : "-"
       }}
     </p>
-    <div class="total-price">
-      Total Price after taxes: {{ totalDiscountedPrice }}
-    </div>
   </div>
   <!--lijeva strana last session-->
   <div class="session-result-container">
     <div class="session-total-silver-text">Last Session Silver Earned</div>
     <p class="session-resultm">
       {{ lastSessionTotal > 0 ? lastSessionTotal.toLocaleString() : "-" }}
+    </p>
+    <div class="total-silver-text">Total Session Silver after taxes:</div>
+    <p class="resultm">
+      {{
+        lastSessionTotalDisc > 0 ? lastSessionTotalDisc.toLocaleString() : "-"
+      }}
     </p>
     <div class="session-average-silver-text">
       Last Session Average Silver per Hour
@@ -712,6 +718,7 @@ export default {
       selectedSpot: null,
       sessionTotal: 0,
       accumulatedTotal: 0,
+      TotalDisc: 0,
       accumulatedHours: 0,
       lastSessionTotal: 0,
       lastSessionTotalDisc: 0,
@@ -1047,7 +1054,6 @@ export default {
     },
     async calculateAndSave() {
       let currentTotal = 0;
-      this.lastSessionTotalDisc = this.totalDiscountedPrice;
 
       console.log("Calculating and Saving...");
       console.log("Current Item2 Discount State:", this.item2_discount);
@@ -1083,6 +1089,7 @@ export default {
 
       // total
       this.accumulatedTotal += currentTotal;
+      this.TotalDisc += this.totalDiscountedPrice;
       this.accumulatedHours += totalHoursForSession;
 
       const spotNames = {
@@ -1100,7 +1107,7 @@ export default {
         grindingSpotName: currentSpotName,
         items: this.items[this.selectedSpot],
         total: this.lastSessionTotal,
-        totalDiscounted: this.totalDiscountedPrice,
+        totalDiscounted: this.TotalDisc,
         average: Math.round(
           this.lastSessionTotalDisc /
             (this.lastSessionHours + this.lastSessionMinutes / 60)
