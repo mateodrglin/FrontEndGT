@@ -6,6 +6,11 @@
     <div class="totals-box">
       <h3>Accumulated Totals</h3>
       <p>Total Silver: {{ formatNumber(accumulatedTotal.totalSilver) }}</p>
+      <p>
+        Total Discounted Silver:
+        {{ formatNumber(accumulatedTotal.totalDiscounted) }}
+      </p>
+
       <p>Average Silver: {{ formatNumber(accumulatedTotal.averageSilver) }}</p>
       <p>Total Hours: {{ formatNumber(accumulatedTotal.totalHours) }}</p>
     </div>
@@ -16,6 +21,7 @@
       <div class="spot-item" v-for="spot in totalsPerSpot" :key="spot._id">
         <p><strong>Spot:</strong> {{ spot._id }}</p>
         <p>Total Silver: {{ formatNumber(spot.totalSilver) }}</p>
+        <p>Total Discounted Silver: {{ formatNumber(spot.totalDiscounted) }}</p>
         <p>Average Silver: {{ formatNumber(spot.averageSilver) }}</p>
         <p>Total Hours: {{ formatNumber(spot.totalHours) }}</p>
       </div>
@@ -57,6 +63,11 @@ export default {
 
       this.totalsPerSpot = totalsPerSpot;
       this.accumulatedTotal = accumulatedTotal;
+      this.totalsPerSpot.forEach((spot) => {
+        spot.totalDiscounted = spot.totalDiscounted || 0;
+      });
+      this.accumulatedTotal.totalDiscounted =
+        this.accumulatedTotal.totalDiscounted || 0;
 
       const labels = totalsPerSpot.map((spot) => spot._id);
       const data = totalsPerSpot.map((spot) => spot.totalSilver);
