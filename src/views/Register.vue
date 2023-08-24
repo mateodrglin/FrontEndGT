@@ -79,8 +79,26 @@ export default {
       // Check password length
       if (this.password.length < 6) {
         this.errorMessage = "Password must be at least 6 characters long.";
+        document.getElementById("alert_2").classList.remove("d-none");
         return;
       }
+
+      // Debug: Print the email value
+      console.log("Email value:", this.email);
+
+      // Check email format
+      const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+      if (!emailRegex.test(this.email)) {
+        console.log("Invalid email format detected"); // Debug message
+        this.errorMessage = "Invalid email format.";
+        document.getElementById("alert_2").classList.remove("d-none");
+        return;
+      }
+
+      // If the code reaches this point, you can optionally hide the error message (if previously displayed)
+      document.getElementById("alert_2").classList.add("d-none");
+
+      // ... Continue with the rest of the Register method ...
 
       try {
         const response = await axios.post("http://localhost:5000/register", {
@@ -92,7 +110,6 @@ export default {
         if (response.status === 201) {
           // Registration successful
           this.$router.push("/login");
-          window.location.reload();
         } else {
           this.errorMessage = "Failed to register. Please try again.";
         }

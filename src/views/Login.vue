@@ -62,6 +62,13 @@ export default {
       isLoggedIn: false,
     };
   },
+  created() {
+    // Check if userId exists in localStorage upon Vue instance creation
+    const userId = localStorage.getItem("userId");
+    if (userId) {
+      this.isLoggedIn = true;
+    }
+  },
   methods: {
     async Login() {
       try {
@@ -73,8 +80,8 @@ export default {
         if (response.status === 200) {
           // Login successful
           localStorage.setItem("userId", response.data.userId);
+          console.log("About to redirect to /import");
           this.$router.push("/import");
-          window.location.reload();
         } else {
           this.handleError(response);
         }

@@ -20,7 +20,7 @@
           <li class="nav-item">
             <router-link to="/">Home</router-link>
           </li>
-          <li class="nav-item">
+          <li class="nav-item" v-if="isLoggedIn">
             <router-link to="/import">Import</router-link>
           </li>
 
@@ -50,6 +50,7 @@ export default {
       isLoggedIn: false,
     };
   },
+
   mounted() {
     axios
       .get("http://localhost:5000/isAuthenticated", { withCredentials: true })
