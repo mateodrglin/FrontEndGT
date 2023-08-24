@@ -6,13 +6,17 @@
       <!-- Display Accumulated Totals -->
       <div class="totals-box">
         <h3>Accumulated Totals</h3>
-        <p>Total Silver: {{ formatNumber(accumulatedTotal.totalSilver) }}</p>
+        <p>
+          Total Silver Earned:
+          {{ formatNumber(accumulatedTotal.totalDiscounted) }}
+        </p>
         <p>
           Highest Total Silver Earned in Session:
           {{ formatNumber(highestTotalDiscountedSilver) }}
         </p>
         <p>
-          Average Silver: {{ formatNumber(accumulatedTotal.averageSilver) }}
+          Average Silver Per Hour:
+          {{ formatNumber(accumulatedTotal.averageSilver) }}
         </p>
         <p>Total Hours: {{ formatNumber(accumulatedTotal.totalHours) }}</p>
       </div>
@@ -22,12 +26,8 @@
         <h3>Totals Per Spot</h3>
         <div class="spot-item" v-for="spot in totalsPerSpot" :key="spot._id">
           <p><strong>Spot:</strong> {{ spot._id }}</p>
-          <p>Total Silver: {{ formatNumber(spot.totalSilver) }}</p>
-
-          <p>
-            Total Discounted Silver: {{ formatNumber(spot.totalDiscounted) }}
-          </p>
-          <p>Average Silver: {{ formatNumber(spot.averageSilver) }}</p>
+          <p>Total Silver Earned: {{ formatNumber(spot.totalDiscounted) }}</p>
+          <p>Average Silver Per Hour: {{ formatNumber(spot.averageSilver) }}</p>
           <p>Total Hours: {{ formatNumber(spot.totalHours) }}</p>
         </div>
       </div>
