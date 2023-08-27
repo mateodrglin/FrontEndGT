@@ -95,10 +95,9 @@ export default {
         return;
       }
 
-      // If the code reaches this point, you can optionally hide the error message (if previously displayed)
       document.getElementById("alert_2").classList.add("d-none");
 
-      // ... Continue with the rest of the Register method ...
+
 
       try {
         const response = await axios.post("http://localhost:5000/register", {
