@@ -53,7 +53,7 @@ export default {
 
   mounted() {
     axios
-      .get("http://https://backendgt.onrender.com:5000/isAuthenticated", {
+      .get("https://backendgt.onrender.com:5000/isAuthenticated", {
         withCredentials: true,
       })
       .then((response) => {

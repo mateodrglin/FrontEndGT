@@ -1119,7 +1119,7 @@ export default {
       // Send the data to backend
       try {
         await axios.post(
-          "http://https://backendgt.onrender.com:5000/saveStats",
+          "https://backendgt.onrender.com:5000/saveStats",
           dataToSave,
           {
             withCredentials: true,
