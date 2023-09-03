@@ -63,7 +63,7 @@ export default {
   async mounted() {
     try {
       const response = await axios.get(
-        "https://backendgt.onrender.com:5000/totalsilver",
+        "https://backendgt.onrender.com/totalsilver",
         {
           withCredentials: true,
         }
