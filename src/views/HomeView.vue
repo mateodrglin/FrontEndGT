@@ -80,7 +80,7 @@ export default {
 
       // Fetching the highest TotalDisc value
       const responseHighestTotalDiscountedSilver = await axios.get(
-        "https://backendgt.onrender.com:10000/highestTotalDiscountedSilver",
+        "https://backendgt.onrender.com/highestTotalDiscountedSilver",
         {
           withCredentials: true,
         }

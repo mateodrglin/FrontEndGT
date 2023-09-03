@@ -52,13 +52,22 @@ export default {
   },
 
   mounted() {
-    axios
-      .get("https://backendgt.onrender.com/isAuthenticated", {
-        withCredentials: true,
-      })
-      .then((response) => {
-        this.isLoggedIn = response.data.isAuthenticated;
-      });
+    this.checkAuth();
+    this.interval = setInterval(this.checkAuth, 5000); // checks every 5 seconds
+  },
+  beforeDestroy() {
+    clearInterval(this.interval);
+  },
+  methods: {
+    checkAuth() {
+      axios
+        .get("https://backendgt.onrender.com/isAuthenticated", {
+          withCredentials: true,
+        })
+        .then((response) => {
+          this.isLoggedIn = response.data.isAuthenticated;
+        });
+    },
   },
 };
 </script>
