@@ -99,7 +99,7 @@ export default {
 
       try {
         const response = await axios.post(
-          "https://backendgt.onrender.com:5000/register",
+          "https://backendgt.onrender.com:10000/register",
           {
             username: this.username,
             email: this.email,
