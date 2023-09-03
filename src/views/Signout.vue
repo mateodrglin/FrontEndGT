@@ -28,7 +28,7 @@ export default {
     async fetchUserEmail() {
       try {
         const response = await axios.get(
-          "https://backendgt.onrender.5000:10000/user",
+          "https://backendgt.onrender.5000/user",
           {
             withCredentials: true,
           }
