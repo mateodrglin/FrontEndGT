@@ -63,7 +63,7 @@ export default {
   async mounted() {
     try {
       const response = await axios.get(
-        "http://https://backendgt.onrender.com:10000/totalsilver",
+        "http://https://backendgt.onrender.com:5000/totalsilver",
         {
           withCredentials: true,
         }
@@ -80,7 +80,7 @@ export default {
 
       // Fetching the highest TotalDisc value
       const responseHighestTotalDiscountedSilver = await axios.get(
-        "http://https://backendgt.onrender.com:10000/highestTotalDiscountedSilver",
+        "http://https://backendgt.onrender.com:5000/highestTotalDiscountedSilver",
         {
           withCredentials: true,
         }

@@ -28,7 +28,7 @@ export default {
     async fetchUserEmail() {
       try {
         const response = await axios.get(
-          "http://https://backendgt.onrender.com:10000/user",
+          "http://https://backendgt.onrender.com:5000/user",
           {
             withCredentials: true,
           }
@@ -46,7 +46,7 @@ export default {
     async signOut() {
       try {
         const response = await axios.delete(
-          "http://https://backendgt.onrender.com:10000/logout",
+          "http://https://backendgt.onrender.com:5000/logout",
           {
             withCredentials: true,
           }
