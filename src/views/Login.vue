@@ -72,10 +72,13 @@ export default {
   methods: {
     async Login() {
       try {
-        const response = await axios.post("http://localhost:5000/login", {
-          email: this.email,
-          password: this.password,
-        });
+        const response = await axios.post(
+          "http://https://backendgt.onrender.com:10000/login",
+          {
+            email: this.email,
+            password: this.password,
+          }
+        );
 
         if (response.status === 200) {
           // Login successful

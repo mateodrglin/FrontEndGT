@@ -97,14 +97,15 @@ export default {
 
       document.getElementById("alert_2").classList.add("d-none");
 
-
-
       try {
-        const response = await axios.post("http://localhost:5000/register", {
-          username: this.username,
-          email: this.email,
-          password: this.password,
-        });
+        const response = await axios.post(
+          "http://https://backendgt.onrender.com:10000/register",
+          {
+            username: this.username,
+            email: this.email,
+            password: this.password,
+          }
+        );
 
         if (response.status === 201) {
           // Registration successful

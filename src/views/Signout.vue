@@ -27,9 +27,12 @@ export default {
   methods: {
     async fetchUserEmail() {
       try {
-        const response = await axios.get("http://localhost:5000/user", {
-          withCredentials: true,
-        });
+        const response = await axios.get(
+          "http://https://backendgt.onrender.com:10000/user",
+          {
+            withCredentials: true,
+          }
+        );
 
         if (response.status === 200) {
           this.email = response.data.email;
@@ -42,9 +45,12 @@ export default {
     },
     async signOut() {
       try {
-        const response = await axios.delete("http://localhost:5000/logout", {
-          withCredentials: true,
-        });
+        const response = await axios.delete(
+          "http://https://backendgt.onrender.com:10000/logout",
+          {
+            withCredentials: true,
+          }
+        );
 
         if (response.status === 200) {
           // Update logoutSuccess to display the message
