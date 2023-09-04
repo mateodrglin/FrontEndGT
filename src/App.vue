@@ -45,6 +45,14 @@
 import axios from "axios";
 
 export default {
+  computed: {
+    isAuthenticated() {
+      return !!localStorage.getItem("token");
+    },
+    username() {
+      return localStorage.getItem("username");
+    },
+  },
   data() {
     return {
       isLoggedIn: false,
@@ -52,22 +60,11 @@ export default {
   },
 
   mounted() {
-    this.checkAuth();
-    this.interval = setInterval(this.checkAuth, 5000); // checks every 5 seconds
-  },
-  beforeDestroy() {
-    clearInterval(this.interval);
-  },
-  methods: {
-    checkAuth() {
-      axios
-        .get("https://backendgt.onrender.com/isAuthenticated", {
-          withCredentials: true,
-        })
-        .then((response) => {
-          this.isLoggedIn = response.data.isAuthenticated;
-        });
-    },
+    axios
+      .get("http://localhost:5000/isAuthenticated", { withCredentials: true })
+      .then((response) => {
+        this.isLoggedIn = response.data.isAuthenticated;
+      });
   },
 };
 </script>

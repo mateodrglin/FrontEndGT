@@ -27,12 +27,7 @@ export default {
   methods: {
     async fetchUserEmail() {
       try {
-        const response = await axios.get(
-          "https://backendgt.onrender.com/user",
-          {
-            withCredentials: true,
-          }
-        );
+        const response = await axios.get("http://localhost:5000/user", {});
 
         if (response.status === 200) {
           this.email = response.data.email;
@@ -45,25 +40,19 @@ export default {
     },
     async signOut() {
       try {
-        const response = await axios.delete(
-          "https://backendgt.onrender.com/logout",
-          {
-            withCredentials: true,
-          }
-        );
+        // Remove the JWT token and username from local storage
+        localStorage.removeItem("token");
+        localStorage.removeItem("username");
 
-        if (response.status === 200) {
-          // Update logoutSuccess to display the message
-          this.logoutSuccess = true;
+        // Update logoutSuccess to display the message
+        this.logoutSuccess = true;
 
-          // Navigate to home after a short delay and then refresh
-          setTimeout(() => {
-            window.location.href = "/";
+        // Navigate to the login page after a short delay and then refresh
+        setTimeout(() => {
+          this.$router.push("/login").then(() => {
             window.location.reload();
-          }, 2000); // 2 seconds delay to let the user see the message
-        } else {
-          console.error("Error during logout:", response.data.message);
-        }
+          });
+        }, 2000); // 2 seconds delay to let the user see the message
       } catch (error) {
         console.error("Error during logout:", error);
       }

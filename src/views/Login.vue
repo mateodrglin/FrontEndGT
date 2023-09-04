@@ -72,14 +72,12 @@ export default {
   methods: {
     async Login() {
       try {
-        const response = await axios.post(
-          "https://backendgt.onrender.com/login",
-          {
-            email: this.email,
-            password: this.password,
-          }
-        );
-
+        const response = await axios.post("http://localhost:5000/login", {
+          email: this.email,
+          password: this.password,
+        });
+        localStorage.setItem("token", response.data.token);
+        localStorage.setItem("username", this.username);
         if (response.status === 200) {
           // Login successful
           localStorage.setItem("userId", response.data.userId);
