@@ -1,6 +1,6 @@
 <template>
   <div class="main-container">
-    <div class="container">
+    <div class="containerhv">
       <p class="title">HomeView Dashboard</p>
 
       <!-- Display Accumulated Totals -->
