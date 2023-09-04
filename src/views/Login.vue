@@ -106,14 +106,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss">
-.container {
-  padding-top: 50px;
-}
-</style>
-<style lang="scss">
-.container {
-  padding-top: 50px;
-}
-</style>
