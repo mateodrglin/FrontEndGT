@@ -3,7 +3,7 @@ import App from "./App.vue";
 import router from "./router";
 import axios from 'axios';
 import useApexCharts from 'vue3-apexcharts';  
-import './assets/styles.css';
+
 axios.interceptors.request.use((config) => {
     const token = localStorage.getItem('token');
     if (token) {
