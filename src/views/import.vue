@@ -1153,3 +1153,171 @@ export default {
   },
 };
 </script>
+
+<style lang="scss">
+.loot1 {
+  width: 40px;
+  height: 40px;
+  margin-right: 5px;
+  margin-bottom: 5px;
+}
+.bbox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+.box {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 10px;
+  position: relative;
+}
+
+.time-input-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 15px;
+  gap: 20px;
+}
+
+.hours-box,
+.minutes-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.hours-box input {
+  width: 110px;
+  text-align: center;
+  text-align: left;
+}
+.minutes-box input {
+  width: 80px;
+  text-align: center;
+  text-align: left;
+}
+.hours-text,
+.minutes-text {
+  background: rgba(83, 83, 73, 0.744);
+  color: #fff;
+  padding: 5px;
+  margin-bottom: 10px;
+  width: 100%;
+  text-align: center;
+}
+
+.text {
+  position: absolute;
+  left: -100%;
+  top: 50%;
+  transform: translateY(-50%);
+  margin-left: 35px;
+  visibility: hidden;
+  opacity: 0;
+  background: rgba(234, 234, 86, 0.752);
+  color: black;
+}
+
+.box:hover .text {
+  visibility: visible;
+  opacity: 1;
+}
+.buttonsave {
+  background-color: rgba(234, 234, 86, 0.752);
+  margin-top: 7px;
+}
+.buttonsave:hover {
+  background-color: yellow;
+}
+.result-container {
+  position: absolute;
+  top: 25%;
+  right: 5%;
+  text-align: right;
+}
+
+.total-silver-text,
+.average-silver-text,
+.total-hours-text {
+  font-size: 20px;
+  color: black;
+  background-color: yellow;
+  display: block;
+  margin-bottom: 5px;
+  padding: 2px;
+}
+
+.resultm,
+.average-silver {
+  color: white;
+  background: rgba(83, 83, 73, 0.744);
+  font-size: 20px;
+  padding: 5px;
+}
+
+.total-hours {
+  font-size: 20px;
+  color: white;
+  background: rgba(83, 83, 73, 0.744);
+  padding: 5px;
+}
+.spot-container {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+
+  .spot {
+    padding: 10px 20px;
+    margin: 0 10px;
+    border: 1px solid #000;
+    cursor: pointer;
+    transition: background-color 0.3s;
+
+    &:hover {
+      background-color: rgba(234, 234, 86, 0.752);
+    }
+  }
+}
+.session-result-container {
+  position: absolute;
+  top: 25%;
+  left: 5%;
+  text-align: left;
+
+  .session-total-silver-text,
+  .session-average-silver-text,
+  .session-total-hours-text {
+    font-size: 20px;
+    color: black;
+    background-color: yellow;
+    display: block;
+    margin-bottom: 5px;
+    padding: 2px;
+  }
+
+  .session-resultm,
+  .session-average-silver {
+    color: white;
+    background: rgba(83, 83, 73, 0.744);
+    font-size: 20px;
+    padding: 5px;
+  }
+
+  .session-total-hours {
+    font-size: 20px;
+    color: white;
+    background: rgba(83, 83, 73, 0.744);
+    padding: 5px;
+  }
+}
+.error {
+  color: red;
+  font-size: 12px;
+  margin-top: 5px;
+}
+</style>
