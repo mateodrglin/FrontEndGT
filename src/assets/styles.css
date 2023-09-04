@@ -109,30 +109,22 @@
     background: rgba(83, 83, 73, 0.744);
     padding: 5px;
   }
-  .spot-container {
+  .spot-containerv {
     display: flex;
     justify-content: center;
     margin: 20px 0;
-  
-    .spot {
-      padding: 10px 20px;
-      margin: 0 10px;
-      border: 1px solid #000;
-      cursor: pointer;
-      transition: background-color 0.3s;
-  
-      &:hover {
-        background-color: rgba(234, 234, 86, 0.752);
-      }
-    }
   }
-  .session-result-container {
-    position: absolute;
-    top: 25%;
-    left: 5%;
-    text-align: left;
-  
-    .session-total-silver-text,
+  .spot {
+    padding: 10px 20px;
+    margin: 0 10px;
+    border: 1px solid #000;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  &:hover {
+    background-color: rgba(234, 234, 86, 0.752);
+  }
+  .session-total-silver-text,
     .session-average-silver-text,
     .session-total-hours-text {
       font-size: 20px;
@@ -142,22 +134,25 @@
       margin-bottom: 5px;
       padding: 2px;
     }
-  
-    .session-resultm,
+  .session-result-container {
+    position: absolute;
+    top: 25%;
+    left: 5%;
+    text-align: left;
+  }
+  .session-total-hours {
+    font-size: 20px;
+    color: white;
+    background: rgba(83, 83, 73, 0.744);
+    padding: 5px;
+  }
+  .session-resultm,
     .session-average-silver {
       color: white;
       background: rgba(83, 83, 73, 0.744);
       font-size: 20px;
       padding: 5px;
     }
-  
-    .session-total-hours {
-      font-size: 20px;
-      color: white;
-      background: rgba(83, 83, 73, 0.744);
-      padding: 5px;
-    }
-  }
   .error {
     color: red;
     font-size: 12px;
@@ -166,9 +161,7 @@
   .containerl {
     padding-top: 50px;
   }
-  .containerl {
-    padding-top: 50px;
-  }
+
   .containerhv {
     display: flex;
     flex-direction: column;
