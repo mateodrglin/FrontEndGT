@@ -1118,9 +1118,13 @@ export default {
 
       // Send the data to backend
       try {
-        await axios.post("http://localhost:5000/saveStats", dataToSave, {
-          withCredentials: true,
-        });
+        await axios.post(
+          "https://backendgt.onrender.com/saveStats",
+          dataToSave,
+          {
+            withCredentials: true,
+          }
+        );
         console.log("Data saved successfully");
       } catch (error) {
         console.error("Error saving data:", error);

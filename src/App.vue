@@ -61,7 +61,9 @@ export default {
 
   mounted() {
     axios
-      .get("http://localhost:5000/isAuthenticated", { withCredentials: true })
+      .get("https://backendgt.onrender.com/isAuthenticated", {
+        withCredentials: true,
+      })
       .then((response) => {
         this.isLoggedIn = response.data.isAuthenticated;
       });

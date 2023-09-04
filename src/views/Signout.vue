@@ -27,7 +27,10 @@ export default {
   methods: {
     async fetchUserEmail() {
       try {
-        const response = await axios.get("http://localhost:5000/user", {});
+        const response = await axios.get(
+          "https://backendgt.onrender.com/user",
+          {}
+        );
 
         if (response.status === 200) {
           this.email = response.data.email;
