@@ -1,4 +1,4 @@
-(https://front-end-gt-cjol.vercel.app/Login)
+Link za stranicu: [Click here](https://front-end-gt-cjol.vercel.app/Login)
 
 BDOTracker: Mateo Drglin
 Fakultet informatike u Puli
